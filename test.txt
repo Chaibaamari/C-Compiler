@@ -1,0 +1,16 @@
+import MATH;
+import LANG;
+
+Programme L3_ISIL_A {
+PDec
+
+Integer a , b;
+Float c;
+
+InDebut
+
+x=3;
+y=5;
+
+InFin
+}
