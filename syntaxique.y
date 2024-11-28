@@ -1,6 +1,8 @@
 %{
   #include <stdio.h>
   #include "syntaxique.tab.h" 
+
+  int nb_ligne = 1;
 %}
 %token BIB_LANG IMPORT BIB_MATH pvg err Idf FIN_PG COMMA ACO_R ACO_C ;
 %token START_PG TYPE_FLOAT TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal CONST ;
