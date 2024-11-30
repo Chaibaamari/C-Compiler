@@ -1,5 +1,4 @@
-import MATH;
-import LANG;
+import Math.io;
 
 Programme L3_ISIL_A {
 PDec

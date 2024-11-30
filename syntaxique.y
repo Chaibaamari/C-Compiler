@@ -4,8 +4,13 @@
 
   int nb_ligne = 1;
 %}
-%token BIB_LANG IMPORT BIB_MATH pvg err Idf FIN_PG COMMA ACO_R ACO_C ;
-%token START_PG TYPE_FLOAT TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal CONST ;
+%union{
+  int entier;
+  char* str;
+}
+
+%token BIB_LANG IMPORT BIB_MATH pvg err <str>Idf FIN_PG COMMA ACO_R ACO_C ;
+%token START_PG TYPE_FLOAT TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal <entier>CONST ;
 
 %%
   Z: IMP PROD_D ACO_R P_DECL ACO_C
@@ -65,6 +70,7 @@ FIN: pvg  INSTRUCTION
 main()
 {
 yyparse(); 
+displaySymbolTable();
 }
 syywrap()
 {}

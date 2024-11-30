@@ -73,9 +73,11 @@
   #include <stdio.h>
   #include "syntaxique.tab.h" 
 
+  int nb_ligne = 1;
+
 
 /* Line 189 of yacc.c  */
-#line 79 "syntaxique.tab.c"
+#line 81 "syntaxique.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -125,7 +127,20 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+{
+
+/* Line 214 of yacc.c  */
+#line 7 "syntaxique.y"
+
+  int entier;
+  char* str;
+
+
+
+/* Line 214 of yacc.c  */
+#line 143 "syntaxique.tab.c"
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -136,7 +151,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 140 "syntaxique.tab.c"
+#line 155 "syntaxique.tab.c"
 
 #ifdef short
 # undef short
@@ -427,9 +442,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,     9,     9,    16,    17,    20,    21,    24,    27,    30,
-      31,    34,    37,    38,    39,    42,    45,    46,    49,    52,
-      53,    55,    58
+       0,    16,    16,    23,    24,    27,    28,    31,    34,    37,
+      38,    41,    44,    45,    46,    49,    52,    53,    56,    59,
+      60,    62,    65
 };
 #endif
 
@@ -1352,7 +1367,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 10 "syntaxique.y"
+#line 17 "syntaxique.y"
     {
     printf("Assignment successful\n");
     YYACCEPT;
@@ -1362,7 +1377,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1366 "syntaxique.tab.c"
+#line 1381 "syntaxique.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1574,12 +1589,13 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 61 "syntaxique.y"
+#line 68 "syntaxique.y"
 
 
 main()
 {
 yyparse(); 
+displaySymbolTable();
 }
 syywrap()
 {}
