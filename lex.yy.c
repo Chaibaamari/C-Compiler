@@ -286,14 +286,14 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 21
 static yyconst short int yy_accept[77] =
     {   0,
-        0,    0,   21,   19,   17,   18,   17,   16,   12,   12,
-       15,   14,   13,   13,   13,   13,   13,   13,   13,   10,
-       11,   12,   13,   13,   13,   13,   13,   13,   13,   13,
-       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
-       13,   13,   13,   13,   13,    5,   13,   13,    7,   13,
-        9,   13,    0,   13,    0,   13,   13,   13,   13,   13,
-        0,   13,    0,   13,   13,    1,    8,    6,    2,    2,
-        3,    3,   13,   13,    4,    0
+        0,    0,   21,   19,   17,   18,   17,   16,   13,   13,
+       15,   14,   12,   12,   12,   12,   12,   12,   12,   10,
+       11,   13,   12,   12,   12,   12,   12,   12,   12,   12,
+       12,   12,   12,   12,   12,   12,   12,   12,   12,   12,
+       12,   12,   12,   12,   12,    5,   12,   12,    7,   12,
+        9,   12,    0,   12,    0,   12,   12,   12,   12,   12,
+        0,   12,    0,   12,   12,    1,    8,    6,    2,    2,
+        3,    3,   12,   12,    4,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -688,80 +688,98 @@ return KEY_WORD_PDec;
 case 6:
 YY_RULE_SETUP
 #line 21 "lexical.l"
-return TYPE_INT;
+{
+                         yylval.str=strdup("Integer");
+                         return TYPE_INT;
+                       }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 22 "lexical.l"
-return TYPE_FLOAT;
+#line 25 "lexical.l"
+{
+                         yylval.str=strdup("Float");
+                         return TYPE_FLOAT;
+                       }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 23 "lexical.l"
+#line 29 "lexical.l"
 return START_PG;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 24 "lexical.l"
+#line 30 "lexical.l"
 return FIN_PG;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 25 "lexical.l"
+#line 31 "lexical.l"
 return ACO_R;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 26 "lexical.l"
+#line 32 "lexical.l"
 return ACO_C; 
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 27 "lexical.l"
-{yylval.entier=atoi(yytext);  printf("La valeur est : "); printf("%d\n" ,yylval.entier=atoi(yytext)); return CONST;}
+#line 33 "lexical.l"
+{
+                          printf("IDF : ");
+                          printf("%s\n", yylval.str = strdup(yytext));
+                          InsertI_In_Ts(yytext, "IDF", "/" , true);
+                          return Idf;
+                       }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 28 "lexical.l"
-{printf("IDF : "); printf("%s\n", yylval.str = strdup(yytext)); InsertI_In_Ts(yytext, "IDF", "identifier");  return Idf;}
+#line 39 "lexical.l"
+{
+                          yylval.entier=atoi(yytext);
+                          printf("La valeur est : ");
+                          char strValue[20];
+                          sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
+                          InsertI_In_Ts(strValue, "Const", "/" , true);
+                          return CONST;
+                       }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 29 "lexical.l"
+#line 47 "lexical.l"
 return Equal;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "lexical.l"
+#line 48 "lexical.l"
 return pvg;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 31 "lexical.l"
+#line 49 "lexical.l"
 return COMMA;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 34 "lexical.l"
+#line 53 "lexical.l"
 /* Skip whitespace */;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "lexical.l"
+#line 54 "lexical.l"
 nb_ligne++ ;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 36 "lexical.l"
+#line 55 "lexical.l"
 {printf("Error Lexical a ligne %d sur %s \n" , nb_ligne ,yytext);
                       return err;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 38 "lexical.l"
+#line 57 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 765 "lex.yy.c"
+#line 783 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1647,5 +1665,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 38 "lexical.l"
+#line 57 "lexical.l"
 

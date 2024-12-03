@@ -18,17 +18,36 @@ Lang.io                 return BIB_LANG;
 Math.io                 return BIB_MATH;
 Programme              return KEY_WORD_Programme;
 PDec                   return KEY_WORD_PDec;
-Integer                return TYPE_INT;
-Float                  return TYPE_FLOAT;
+Integer                {
+                         yylval.str=strdup("Integer");
+                         return TYPE_INT;
+                       }
+Float                  {
+                         yylval.str=strdup("Float");
+                         return TYPE_FLOAT;
+                       }
 InDebut                return START_PG;
 InFin                  return FIN_PG;
 "{"                    return ACO_R;
 "}"                    return ACO_C; 
-{cst}                  {yylval.entier=atoi(yytext);  printf("La valeur est : "); printf("%d\n" ,yylval.entier=atoi(yytext)); return CONST;}
-{IDF}                  {printf("IDF : "); printf("%s\n", yylval.str = strdup(yytext)); InsertI_In_Ts(yytext, "IDF", "identifier");  return Idf;}
+{IDF}                  {
+                          printf("IDF : ");
+                          printf("%s\n", yylval.str = strdup(yytext));
+                          InsertI_In_Ts(yytext, "IDF", "/" , true);
+                          return Idf;
+                       }
+{cst}                  {
+                          yylval.entier=atoi(yytext);
+                          printf("La valeur est : ");
+                          char strValue[20];
+                          sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
+                          InsertI_In_Ts(strValue, "Const", "/" , true);
+                          return CONST;
+                       }
 =                      return Equal;
 ;                      return pvg;
 ,                      return COMMA;
+
 
 
 [ \t]                   /* Skip whitespace */;
