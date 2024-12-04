@@ -725,18 +725,16 @@ case 12:
 YY_RULE_SETUP
 #line 33 "lexical.l"
 {
-                          printf("IDF : ");
-                          printf("%s\n", yylval.str = strdup(yytext));
+                          yylval.str = strdup(yytext);
                           InsertI_In_Ts(yytext, "IDF", "/" , true);
                           return Idf;
                        }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 39 "lexical.l"
+#line 38 "lexical.l"
 {
                           yylval.entier=atoi(yytext);
-                          printf("La valeur est : ");
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
                           InsertI_In_Ts(strValue, "Const", "/" , true);
@@ -745,41 +743,41 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 47 "lexical.l"
+#line 45 "lexical.l"
 return Equal;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 48 "lexical.l"
+#line 46 "lexical.l"
 return pvg;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 49 "lexical.l"
+#line 47 "lexical.l"
 return COMMA;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 53 "lexical.l"
+#line 51 "lexical.l"
 /* Skip whitespace */;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 54 "lexical.l"
+#line 52 "lexical.l"
 nb_ligne++ ;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 55 "lexical.l"
+#line 53 "lexical.l"
 {printf("Error Lexical a ligne %d sur %s \n" , nb_ligne ,yytext);
                       return err;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 57 "lexical.l"
+#line 55 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 783 "lex.yy.c"
+#line 781 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1665,5 +1663,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 57 "lexical.l"
+#line 55 "lexical.l"
 

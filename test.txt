@@ -3,8 +3,10 @@ import Math.io;
 Programme L3_ISIL_A {
 PDec
 
-Integer a , b;
 Float c;
+Integer a , b;
+Integer a;
+
 
 InDebut
 

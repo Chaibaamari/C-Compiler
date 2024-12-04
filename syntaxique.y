@@ -6,7 +6,7 @@
   char SaveType[20];
 
 %}
-%union{
+%union{ 
   int entier;
   char* str;
 }
@@ -40,21 +40,31 @@ PROG_NAME: Idf
          | /* epsilon (empty alternative) */
 ;
 
-P_DECL: KEY_WORD_PDec TYPE_D DEB
+P_DECL: KEY_WORD_PDec LISTE_DEC DEB
 ;
 
-TYPE_D: TYPE IDF_NAME 
-      | /* epsilon (empty alternative) */
+LISTE_DEC : DEC LISTE_DEC
+          |
+;
+DEC : DEC_VAR 
+;
+DEC_VAR: TYPE N_IDF pvg
+;
+N_IDF: Idf COMMA N_IDF { if(!searchFullName($1)){
+                                  InsertType($1 , SaveType);
+                                    }else{
+                                      printf("Error semantique: double declaration de varibale '%s' -> la ligne %d\n" , $1 , nb_ligne);
+                                    } 
+                         }
+     | Idf { if(searchFullName($1)){
+                                  InsertType($1 , SaveType);
+                                    }else{
+                                      printf("Error symantique double declaration de varibale %s a la ligne %d\n" , $1 , nb_ligne);
+                                    } 
+                         }
 ;
 TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
-;
-
-IDF_NAME: Idf NEW {InsertType($1 , SaveType)}
-;
-
-NEW: pvg TYPE_D
-    | COMMA IDF_NAME
 ;
 
 DEB: START_PG INSTRUCTION FIN_PG

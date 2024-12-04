@@ -7,7 +7,7 @@
 %}
 
 Lettre [a-zA-Z]
-Chiffre [0-9]
+Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
 cst [1-9][0-9]*|0
 
@@ -31,14 +31,12 @@ InFin                  return FIN_PG;
 "{"                    return ACO_R;
 "}"                    return ACO_C; 
 {IDF}                  {
-                          printf("IDF : ");
-                          printf("%s\n", yylval.str = strdup(yytext));
+                          yylval.str = strdup(yytext);
                           InsertI_In_Ts(yytext, "IDF", "/" , true);
                           return Idf;
                        }
 {cst}                  {
                           yylval.entier=atoi(yytext);
-                          printf("La valeur est : ");
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
                           InsertI_In_Ts(strValue, "Const", "/" , true);

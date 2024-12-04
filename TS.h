@@ -19,6 +19,18 @@ TS *head = NULL;
 // Function to insert a new symbol into the symbol table
 void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
 {
+    // Check if the entity already exists in the list
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->NomEntite, NomEntite) == 0)
+        {
+            return;
+        }
+        current = current->Next;
+    }
+
+    // Allocate memory for the new symbol
     TS *newSymbol = (TS *)malloc(sizeof(TS));
     if (newSymbol == NULL)
     {
@@ -26,16 +38,17 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
         return;
     }
 
+    // add all information
     strcpy(newSymbol->NomEntite, NomEntite);
     strcpy(newSymbol->CodeEntite, CodeEntite);
     strcpy(newSymbol->Type, Type);
-    strcpy(newSymbol->Const, Const ? "Oui" : "Non");
+    strcpy(newSymbol->Const, Const ? "true" : "false");
 
+    // Insert the new symbol at the head of the list
     newSymbol->Next = head;
     head = newSymbol;
 }
 
-// Function to display the symbol table with improved formatting
 void displaySymbolTable()
 {
     printf("\nSymbol Table:\n");
@@ -50,7 +63,7 @@ void displaySymbolTable()
         current = current->Next;
     }
     printf("============================================================================================\n");
-}
+} 
 
 // Function to search for a symbol by its NomEntite and return its position
 int searchPositionInTable(char *NomEntite)
@@ -94,4 +107,17 @@ void InsertType(char *NomEntite, char *Type)
     {
         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
     }
+}
+
+bool searchFullName(char *NomEntite){
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->NomEntite, NomEntite) == 0)
+        {
+            return true;
+        }
+        current = current->Next;
+    }
+    return false;
 }
