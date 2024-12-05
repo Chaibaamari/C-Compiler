@@ -49,13 +49,21 @@
      COMMA = 265,
      ACO_R = 266,
      ACO_C = 267,
-     START_PG = 268,
-     TYPE_FLOAT = 269,
-     TYPE_INT = 270,
-     KEY_WORD_PDec = 271,
-     KEY_WORD_Programme = 272,
-     Equal = 273,
-     CONST = 274
+     ADDOP = 268,
+     MULOP = 269,
+     DIVOP = 270,
+     START_PG = 271,
+     TYPE_FLOAT = 272,
+     TYPE_INT = 273,
+     KEY_WORD_PDec = 274,
+     KEY_WORD_Programme = 275,
+     Equal = 276,
+     INT_CONST = 277,
+     R_BRCKET = 278,
+     L_BRCKET = 279,
+     SEPAR = 280,
+     FINAL = 281,
+     FLOAT_CONST = 282
    };
 #endif
 
@@ -66,7 +74,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 9 "syntaxique.y"
+#line 12 "syntaxique.y"
  
   int entier;
   char* str;
@@ -74,7 +82,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 78 "syntaxique.tab.h"
+#line 86 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

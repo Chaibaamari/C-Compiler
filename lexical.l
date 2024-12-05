@@ -9,15 +9,21 @@
 Lettre [a-zA-Z]
 Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
-cst [1-9][0-9]*|0
+Icst    [1-9][0-9]*|0
+Fcst		0|{Chiffre}*"."{Chiffre}+
 
 %%
 
 import                 return IMPORT;  
-Lang.io                 return BIB_LANG; 
-Math.io                 return BIB_MATH;
+Lang.io                return BIB_LANG; 
+Math.io                return BIB_MATH;
 Programme              return KEY_WORD_Programme;
 PDec                   return KEY_WORD_PDec;
+InDebut                return START_PG;
+InFin                  return FIN_PG;
+"{"                    return ACO_R;
+"}"                    return ACO_C;
+
 Integer                {
                          yylval.str=strdup("Integer");
                          return TYPE_INT;
@@ -25,26 +31,48 @@ Integer                {
 Float                  {
                          yylval.str=strdup("Float");
                          return TYPE_FLOAT;
-                       }
-InDebut                return START_PG;
-InFin                  return FIN_PG;
-"{"                    return ACO_R;
-"}"                    return ACO_C; 
+                       } 
+final                  { return FINAL;}
 {IDF}                  {
                           yylval.str = strdup(yytext);
-                          InsertI_In_Ts(yytext, "IDF", "/" , true);
+                          if(yyleng > 18){
+                            printf("input Size is too long\n");
+                            return;
+                          }else{
+                            InsertI_In_Ts(yytext, "IDF", "/" , true);
                           return Idf;
+                          }
                        }
-{cst}                  {
+{Icst}                  {
                           yylval.entier=atoi(yytext);
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
                           InsertI_In_Ts(strValue, "Const", "/" , true);
-                          return CONST;
+                          return INT_CONST;
                        }
+{Fcst}                  {
+                          yylval.entier=atoi(yytext);
+                          char strValue[20];
+                          sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
+                          InsertI_In_Ts(strValue, "Const", "/" , true);
+                          return FLOAT_CONST;
+                       }
+
 =                      return Equal;
 ;                      return pvg;
 ,                      return COMMA;
+
+
+
+
+"+"|"-"		            { return ADDOP; }
+"*"			              { return MULOP; }
+"/"			              { return DIVOP; }
+
+"["                   { return L_BRCKET;}
+"]"                   { return R_BRCKET;}
+"|"                   { return SEPAR;}
+
 
 
 

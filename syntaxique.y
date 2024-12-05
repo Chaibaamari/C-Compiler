@@ -2,8 +2,11 @@
   #include <stdio.h>
   #include "syntaxique.tab.h" 
 
+
   int nb_ligne = 1;
   char SaveType[20];
+  int trouve;
+
 
 %}
 %union{ 
@@ -11,11 +14,17 @@
   char* str;
 }
 
-%token BIB_LANG IMPORT BIB_MATH pvg err <str>Idf FIN_PG COMMA ACO_R ACO_C ;
-%token START_PG <str>TYPE_FLOAT <str>TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal <entier>CONST ;
+%token BIB_LANG IMPORT BIB_MATH pvg err <str>Idf FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
+%token START_PG <str>TYPE_FLOAT <str>TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal <entier>INT_CONST ;
+%token R_BRCKET L_BRCKET SEPAR FINAL FLOAT_CONST;
+
+
+%left MULOP DIVOP
+%left ADDOP
+
 
 %%
-  Z: IMP PROD_D ACO_R P_DECL ACO_C
+Z: IMP PROGRMME_NAME  P_DECL 
   {
     printf("Assignment successful\n");
     YYACCEPT;
@@ -33,51 +42,84 @@ BIB: BIB_LANG T
 T: pvg IMP
 ;
 
-PROD_D: KEY_WORD_Programme PROG_NAME
+PROGRMME_NAME: KEY_WORD_Programme PROG_NAME
 ;
 
 PROG_NAME: Idf
          | /* epsilon (empty alternative) */
 ;
 
-P_DECL: KEY_WORD_PDec LISTE_DEC DEB
+P_DECL: KEY_WORD_PDec DECLARATIONS DEBUT_PROGRAMME
 ;
 
-LISTE_DEC : DEC LISTE_DEC
-          |
+DECLARATIONS : DECLARATIONS DECLARATION
+          | DECLARATION
 ;
-DEC : DEC_VAR 
+
+DECLARATION: TYPE NAMES pvg
+           | FINAL TYPE NAMES pvg
 ;
-DEC_VAR: TYPE N_IDF pvg
+NAMES: NAMES SEPAR VARIABLE
+     | NAMES SEPAR INIT 
+     | VARIABLE  
+     | INIT
 ;
-N_IDF: Idf COMMA N_IDF { if(!searchFullName($1)){
-                                  InsertType($1 , SaveType);
-                                    }else{
-                                      printf("Error semantique: double declaration de varibale '%s' -> la ligne %d\n" , $1 , nb_ligne);
-                                    } 
-                         }
-     | Idf { if(searchFullName($1)){
-                                  InsertType($1 , SaveType);
-                                    }else{
-                                      printf("Error symantique double declaration de varibale %s a la ligne %d\n" , $1 , nb_ligne);
-                                    } 
-                         }
+VARIABLE: Idf {
+                    InsertType($1 , SaveType);
+              } 
+        | Idf ARRAY
+              {
+                    InsertType($1 , SaveType);
+              }
 ;
+ARRAY: ARRAY L_BRCKET INT_CONST R_BRCKET
+     | L_BRCKET INT_CONST R_BRCKET
+;
+
+INIT: Idf Equal INT_CONST 
+              {
+                    InsertType($1 , SaveType);
+              }
+    | Idf Equal FLOAT_CONST
+              {
+                    InsertType($1 , SaveType);
+              }
+;
+
 TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
 ;
 
-DEB: START_PG INSTRUCTION FIN_PG
+DEBUT_PROGRAMME: START_PG CORE_PG FIN_PG
 ;
 
-INSTRUCTION: EXP_S 
-           | 
-;
-EXP_S: Idf Equal CONST FIN
+CORE_PG : INSTRUCTION 
+; /*LOOP CONDITION PRINTF*/
+
+INSTRUCTION : EXPERESSION INSTRUCTION
+            |
 ;
 
-FIN: pvg  INSTRUCTION
+EXPERESSION: Idf Equal INT_CONST pvg {
+                                 if(!searchFullType(SaveType) == 0){
+                                    printf("declare '%s' not found \n" , $1);
+                                    YYACCEPT;
+                                 }
+                                    
+}
 ;
+
+/*
+B: Idf 
+ | INT_CONST
+ | B OP B 
+; 
+OP : ADDOP
+ 
+   | MULOP
+   | DIVOP
+;
+*/
 
 %%
 
@@ -88,6 +130,9 @@ displaySymbolTable();
 }
 syywrap()
 {}
+int yyerror(char *msg){
+  printf("Error syntaxique %d a la ligne %d" , msg , nb_ligne);
+}
 
 
 

@@ -1,17 +1,19 @@
 import Math.io;
 
-Programme L3_ISIL_A {
+Programme L3_ISIL_A
 PDec
 
 Float c;
-Integer a , b;
-Integer a;
+Integer a = 7;
+Float  b ;
+Integer Tab[3];
+final Integer d = 10;
+
+
 
 
 InDebut
 
-x=3;
-y=5;
+
 
 InFin
-}

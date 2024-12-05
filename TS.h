@@ -19,17 +19,17 @@ TS *head = NULL;
 // Function to insert a new symbol into the symbol table
 void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
 {
-    // Check if the entity already exists in the list
     TS *current = head;
+    // check if we have a varibale  that have already declared
     while (current != NULL)
     {
         if (strcmp(current->NomEntite, NomEntite) == 0)
         {
-            return;
+            fprintf(stderr, "Error: Variable '%s' is already declared in the same Programme.\n", NomEntite);
+            return ;
         }
         current = current->Next;
     }
-
     // Allocate memory for the new symbol
     TS *newSymbol = (TS *)malloc(sizeof(TS));
     if (newSymbol == NULL)
@@ -38,7 +38,7 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
         return;
     }
 
-    // add all information
+    // add New one in Ts table
     strcpy(newSymbol->NomEntite, NomEntite);
     strcpy(newSymbol->CodeEntite, CodeEntite);
     strcpy(newSymbol->Type, Type);
@@ -109,15 +109,31 @@ void InsertType(char *NomEntite, char *Type)
     }
 }
 
-bool searchFullName(char *NomEntite){
+int searchFullName(char *NomEntite)
+{
     TS *current = head;
     while (current != NULL)
     {
         if (strcmp(current->NomEntite, NomEntite) == 0)
         {
-            return true;
+            return 1;
         }
         current = current->Next;
     }
-    return false;
+    return 0;
 }
+int searchFullType(const char *TypeEntite)
+{
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->Type, TypeEntite) == 0)
+        {
+            return 1;
+        }
+        current = current->Next;
+    }
+    return 0;
+}
+
+// void SymantiquePart_Declaration()
