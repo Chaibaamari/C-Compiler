@@ -51,7 +51,7 @@ PROG_NAME: Idf
 
 P_DECL: KEY_WORD_PDec DECLARATIONS DEBUT_PROGRAMME
 ;
-
+/*part of déclaration complete */
 DECLARATIONS : DECLARATIONS DECLARATION
           | DECLARATION
 ;
@@ -90,7 +90,7 @@ TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
 ;
 
-/* Part Two Of Experssion or affectation line ( x = x + 1 ) OR ( x = x / 12 )...............*/
+/* Part Two Of Experssion or affectation line ( x = x + 1 ) OR ( x = x / 12 ) here i am not complete this part i will do soon*/
 
 DEBUT_PROGRAMME: START_PG CORE_PG FIN_PG
 ;
