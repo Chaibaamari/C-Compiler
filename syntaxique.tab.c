@@ -462,8 +462,8 @@ static const yytype_uint8 yyrline[] =
 {
        0,    27,    27,    34,    35,    38,    39,    42,    45,    48,
       49,    52,    55,    56,    59,    60,    62,    63,    64,    65,
-      67,    70,    75,    76,    79,    83,    89,    90,    93,    96,
-      99,   100,   103
+      67,    70,    75,    76,    79,    83,    89,    90,    95,    98,
+     101,   102,   105
 };
 #endif
 
@@ -1460,7 +1460,7 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 103 "syntaxique.y"
+#line 105 "syntaxique.y"
     {
                                  if(!searchFullType(SaveType) == 0){
                                     printf("declare '%s' not found \n" , (yyvsp[(1) - (4)].str));
@@ -1685,7 +1685,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 124 "syntaxique.y"
+#line 126 "syntaxique.y"
 
 
 main()

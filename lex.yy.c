@@ -760,7 +760,7 @@ YY_RULE_SETUP
 {
                           yylval.str = strdup(yytext);
                           if(yyleng > 18){
-                            printf("input Size is too long");
+                            printf("input Size is too long\n");
                             return;
                           }else{
                             InsertI_In_Ts(yytext, "IDF", "/" , true);

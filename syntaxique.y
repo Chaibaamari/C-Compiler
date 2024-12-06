@@ -90,6 +90,8 @@ TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
 ;
 
+/* Part Two Of Experssion or affectation line ( x = x + 1 ) OR ( x = x / 12 )...............*/
+
 DEBUT_PROGRAMME: START_PG CORE_PG FIN_PG
 ;
 

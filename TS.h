@@ -108,20 +108,20 @@ void InsertType(char *NomEntite, char *Type)
         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
     }
 }
-
-int searchFullName(char *NomEntite)
-{
-    TS *current = head;
-    while (current != NULL)
-    {
-        if (strcmp(current->NomEntite, NomEntite) == 0)
-        {
-            return 1;
-        }
-        current = current->Next;
-    }
-    return 0;
-}
+// we dont need this now 
+// int searchFullName(char *NomEntite)
+// {
+//     TS *current = head;
+//     while (current != NULL)
+//     {
+//         if (strcmp(current->NomEntite, NomEntite) == 0)
+//         {
+//             return 1;
+//         }
+//         current = current->Next;
+//     }
+//     return 0;
+// }
 int searchFullType(const char *TypeEntite)
 {
     TS *current = head;
@@ -137,3 +137,15 @@ int searchFullType(const char *TypeEntite)
 }
 
 // void SymantiquePart_Declaration()
+// i wanna create a function here that handle all the Error symantique
+/*
+like for instence : switch 
+                        case: 'double déclaration'
+                        case : 'non déclaré'
+                        case : compatibilité
+                        ......
+
+
+
+
+*/
