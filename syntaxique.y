@@ -105,8 +105,11 @@ INSTRUCTION : EXPERESSION INSTRUCTION
 EXPERESSION: Idf Equal INT_CONST pvg {
                                  if(!searchFullType(SaveType) == 0){
                                     printf("declare '%s' not found \n" , $1);
-                                    YYACCEPT;
-                                 }
+                                    
+                                 }{/*here we have a problemme
+                                    when we triggred this function mean :
+                                    work incorrectly you can check by adding an
+                                     expression like x=3 i will do wait ...-> check this test.txt and you will se the problemme */}
                                     
 }
 ;

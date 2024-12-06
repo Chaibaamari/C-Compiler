@@ -1464,7 +1464,6 @@ yyreduce:
     {
                                  if(!searchFullType(SaveType) == 0){
                                     printf("declare '%s' not found \n" , (yyvsp[(1) - (4)].str));
-                                    YYACCEPT;
                                  }
                                     
 ;}
@@ -1473,7 +1472,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1477 "syntaxique.tab.c"
+#line 1476 "syntaxique.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1685,7 +1684,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 126 "syntaxique.y"
+#line 125 "syntaxique.y"
 
 
 main()
