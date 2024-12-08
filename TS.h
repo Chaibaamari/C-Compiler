@@ -25,9 +25,9 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
     {
         if (strcmp(current->NomEntite, NomEntite) == 0)
         {
-            fprintf(stderr, "Error: Variable '%s' is already declared in the same Programme.\n", NomEntite);
-            return ;
+            return;
         }
+        if(current->Next == NULL) break;
         current = current->Next;
     }
     // Allocate memory for the new symbol
@@ -45,8 +45,12 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
     strcpy(newSymbol->Const, Const ? "true" : "false");
 
     // Insert the new symbol at the head of the list
-    newSymbol->Next = head;
-    head = newSymbol;
+    newSymbol->Next = NULL;
+    if(head == NULL){
+        head = newSymbol;
+    } else {
+        current->Next = newSymbol;
+    }
 }
 
 void displaySymbolTable()
@@ -108,44 +112,29 @@ void InsertType(char *NomEntite, char *Type)
         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
     }
 }
-// we dont need this now 
-// int searchFullName(char *NomEntite)
-// {
-//     TS *current = head;
-//     while (current != NULL)
-//     {
-//         if (strcmp(current->NomEntite, NomEntite) == 0)
-//         {
-//             return 1;
-//         }
-//         current = current->Next;
-//     }
-//     return 0;
-// }
-int searchFullType(const char *TypeEntite)
+
+int searchFullType(const char *NomEntite)
 {
     TS *current = head;
     while (current != NULL)
     {
-        if (strcmp(current->Type, TypeEntite) == 0)
+        if (strcmp(current->NomEntite, NomEntite) == 0)
         {
+            if(strcmp(current->Type , "/") == 0){
+                return 0;
+            }
             return 1;
         }
         current = current->Next;
     }
-    return 0;
+    return -1;
 }
 
-// void SymantiquePart_Declaration()
-// i wanna create a function here that handle all the Error symantique
-/*
-like for instence : switch 
-                        case: 'double déclaration'
-                        case : 'non déclaré'
-                        case : compatibilité
-                        ......
-
-
-
-
-*/
+void handleDeclaration(char *identifier, char *type)
+{
+    if (searchFullType(identifier) == 0){
+        InsertType(identifier, type);
+    }else{
+        printf("Error: Variable '%s' is already declared in the same Programme.\n", identifier);
+    }
+}

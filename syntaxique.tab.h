@@ -63,7 +63,10 @@
      L_BRCKET = 279,
      SEPAR = 280,
      FINAL = 281,
-     FLOAT_CONST = 282
+     FLOAT_CONST = 282,
+     ASSIGN = 283,
+     L_PARENT = 284,
+     R_PARENT = 285
    };
 #endif
 
@@ -82,7 +85,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 86 "syntaxique.tab.h"
+#line 89 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

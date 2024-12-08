@@ -16,7 +16,7 @@
 
 %token BIB_LANG IMPORT BIB_MATH pvg err <str>Idf FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
 %token START_PG <str>TYPE_FLOAT <str>TYPE_INT KEY_WORD_PDec KEY_WORD_Programme Equal <entier>INT_CONST ;
-%token R_BRCKET L_BRCKET SEPAR FINAL FLOAT_CONST;
+%token R_BRCKET L_BRCKET SEPAR FINAL FLOAT_CONST ASSIGN L_PARENT R_PARENT;
 
 
 %left MULOP DIVOP
@@ -64,12 +64,14 @@ NAMES: NAMES SEPAR VARIABLE
      | VARIABLE  
      | INIT
 ;
-VARIABLE: Idf {
-                    InsertType($1 , SaveType);
+VARIABLE: Idf 
+              {
+                handleDeclaration($1, SaveType);
+                
               } 
         | Idf ARRAY
               {
-                    InsertType($1 , SaveType);
+                handleDeclaration($1, SaveType);
               }
 ;
 ARRAY: ARRAY L_BRCKET INT_CONST R_BRCKET
@@ -78,11 +80,11 @@ ARRAY: ARRAY L_BRCKET INT_CONST R_BRCKET
 
 INIT: Idf Equal INT_CONST 
               {
-                    InsertType($1 , SaveType);
+                handleDeclaration($1, SaveType);
               }
     | Idf Equal FLOAT_CONST
               {
-                    InsertType($1 , SaveType);
+                handleDeclaration($1, SaveType);
               }
 ;
 
@@ -90,28 +92,27 @@ TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
 ;
 
-/* Part Two Of Experssion or affectation line ( x = x + 1 ) OR ( x = x / 12 ) here i am not complete this part i will do soon*/
 
 DEBUT_PROGRAMME: START_PG CORE_PG FIN_PG
 ;
 
-CORE_PG : INSTRUCTION 
+CORE_PG : AFFECTATIONS 
 ; /*LOOP CONDITION PRINTF*/
 
-INSTRUCTION : EXPERESSION INSTRUCTION
-            |
+AFFECTATIONS : AFFECTATIONS Idf ASSIGN AFFECTATION pvg
+             | Idf ASSIGN AFFECTATION pvg
 ;
 
-EXPERESSION: Idf Equal INT_CONST pvg {
-                                 if(!searchFullType(SaveType) == 0){
-                                    printf("declare '%s' not found \n" , $1);
-                                    
-                                 }{/*here we have a problemme
-                                    when we triggred this function mean :
-                                    work incorrectly you can check by adding an
-                                     expression like x=3 i will do wait ...-> check this test.txt and you will se the problemme */}
-                                    
-}
+AFFECTATION: AFFECTATION ADDOP AFFECTATION
+           | AFFECTATION MULOP AFFECTATION
+           | AFFECTATION DIVOP AFFECTATION 
+           | L_PARENT AFFECTATION R_PARENT
+           | ADDOP INT_CONST  // SIN NOT FAITE LIKE THIS IS ERROR (-1)
+           | ADDOP FLOAT_CONST
+           | Idf
+           | INT_CONST
+           | FLOAT_CONST
+
 ;
 
 /*

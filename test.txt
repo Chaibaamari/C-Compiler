@@ -5,7 +5,7 @@ PDec
 
 Float c;
 Integer a = 7;
-Float  b  |  x;
+Float  b | x |a;
 Integer Tab[3];
 final Integer d = 10;
 
@@ -13,7 +13,7 @@ final Integer d = 10;
 
 
 InDebut
-x=3;
+x <- x + 1 * (-1) / 0; 
 
 
 InFin

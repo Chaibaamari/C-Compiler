@@ -70,8 +70,11 @@ final                  { return FINAL;}
 "/"			              { return DIVOP; }
 
 "["                   { return L_BRCKET;}
+"("                   { return L_PARENT;}
+")"                   { return R_PARENT;}
 "]"                   { return R_BRCKET;}
 "|"                   { return SEPAR;}
+"<-"                   { return ASSIGN;}
 
 
 
