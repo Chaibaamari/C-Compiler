@@ -59,14 +59,15 @@
      KEY_WORD_Programme = 275,
      Equal = 276,
      INT_CONST = 277,
-     R_BRCKET = 278,
-     L_BRCKET = 279,
-     SEPAR = 280,
-     FINAL = 281,
-     FLOAT_CONST = 282,
+     FLOAT_CONST = 278,
+     R_BRCKET = 279,
+     L_BRCKET = 280,
+     SEPAR = 281,
+     FINAL = 282,
      ASSIGN = 283,
      L_PARENT = 284,
-     R_PARENT = 285
+     R_PARENT = 285,
+     MIX_CHIFFRE = 286
    };
 #endif
 
@@ -77,15 +78,16 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 12 "syntaxique.y"
+#line 11 "syntaxique.y"
  
   int entier;
   char* str;
+  struct Node* node;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 89 "syntaxique.tab.h"
+#line 91 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

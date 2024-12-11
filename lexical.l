@@ -11,6 +11,7 @@ Chiffre [0-9]
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
 Icst    [1-9][0-9]*|0
 Fcst		0|{Chiffre}*"."{Chiffre}+
+chiffre_mix [1-9][0-9]*|0 && 0|{Chiffre}*"."{Chiffre}+
 
 %%
 
@@ -23,6 +24,7 @@ InDebut                return START_PG;
 InFin                  return FIN_PG;
 "{"                    return ACO_R;
 "}"                    return ACO_C;
+chiffre_mix            return MIX_CHIFFRE;
 
 Integer                {
                          yylval.str=strdup("Integer");
@@ -32,39 +34,38 @@ Float                  {
                          yylval.str=strdup("Float");
                          return TYPE_FLOAT;
                        } 
-final                  { return FINAL;}
+final                  { 
+                          yylval.str=strdup("final");
+                          return FINAL;
+                       }
 {IDF}                  {
                           yylval.str = strdup(yytext);
                           if(yyleng > 18){
                             printf("input Size is too long\n");
                             return;
                           }else{
-                            InsertI_In_Ts(yytext, "IDF", "/" , true);
-                          return Idf;
+                            InsertI_In_Ts(yytext, "IDF", "/" , "/");
+                            return Idf;
                           }
                        }
 {Icst}                  {
                           yylval.entier=atoi(yytext);
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
-                          InsertI_In_Ts(strValue, "Const", "/" , true);
+                          InsertI_In_Ts(strValue, "Const", "/" , "/");
                           return INT_CONST;
                        }
 {Fcst}                  {
                           yylval.entier=atoi(yytext);
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
-                          InsertI_In_Ts(strValue, "Const", "/" , true);
+                          InsertI_In_Ts(strValue, "Const", "/" , "/");
                           return FLOAT_CONST;
                        }
 
-=                      return Equal;
-;                      return pvg;
-,                      return COMMA;
-
-
-
-
+=                     { return Equal; }
+;                     { return pvg;   }
+,                     { return COMMA; }
 "+"|"-"		            { return ADDOP; }
 "*"			              { return MULOP; }
 "/"			              { return DIVOP; }
@@ -73,8 +74,8 @@ final                  { return FINAL;}
 "("                   { return L_PARENT;}
 ")"                   { return R_PARENT;}
 "]"                   { return R_BRCKET;}
-"|"                   { return SEPAR;}
-"<-"                   { return ASSIGN;}
+"|"                   { return  SEPAR ; }
+"<-"                  {  return ASSIGN; }
 
 
 

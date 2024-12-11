@@ -9,7 +9,7 @@ typedef struct TS
     char NomEntite[20];
     char CodeEntite[20];
     char Type[20];
-    char Const[5];
+    char Const[20];
     struct TS *Next;
 } TS;
 
@@ -17,7 +17,7 @@ typedef struct TS
 TS *head = NULL;
 
 // Function to insert a new symbol into the symbol table
-void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
+void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, char *Const)
 {
     TS *current = head;
     // check if we have a varibale  that have already declared
@@ -42,7 +42,7 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
     strcpy(newSymbol->NomEntite, NomEntite);
     strcpy(newSymbol->CodeEntite, CodeEntite);
     strcpy(newSymbol->Type, Type);
-    strcpy(newSymbol->Const, Const ? "true" : "false");
+    strcpy(newSymbol->Const, Const);
 
     // Insert the new symbol at the head of the list
     newSymbol->Next = NULL;
@@ -50,6 +50,21 @@ void InsertI_In_Ts(char *NomEntite, char *CodeEntite, char *Type, bool Const)
         head = newSymbol;
     } else {
         current->Next = newSymbol;
+    }
+}
+void setConst_Finel(char *NomEntite)
+{
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->NomEntite, NomEntite) == 0)
+        {
+            if (strcmp(current->Type, "/") == 0)
+            {
+                strcpy(current->Const, "oui");
+            }
+        }
+        current = current->Next;
     }
 }
 
@@ -112,6 +127,30 @@ void InsertType(char *NomEntite, char *Type)
         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
     }
 }
+// void InsertType_CONST(int *NomEntite, char *Type)
+// {
+//     int position = searchPositionInTable(NomEntite);
+//     if (position != -1)
+//     {
+//         TS *current = head;
+//         int currentPos = 0;
+
+//         while (current != NULL)
+//         {
+//             if (currentPos == position)
+//             {
+//                 strcpy(current->Type, Type);
+//                 return;
+//             }
+//             current = current->Next;
+//             currentPos++;
+//         }
+//     }
+//     else
+//     {
+//         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
+//     }
+// }
 
 int searchFullType(const char *NomEntite)
 {
@@ -136,5 +175,20 @@ void handleDeclaration(char *identifier, char *type)
         InsertType(identifier, type);
     }else{
         printf("Error: Variable '%s' is already declared in the same Programme.\n", identifier);
+    }
+}
+void Non_declare(char *NomEntite)
+{
+    if (searchFullType(NomEntite) == 0)
+    {
+        printf("variable '%s' non declare \n", NomEntite);
+    }
+}
+
+void divide_zero(int divider , int nb_Ligne){
+    if(divider == 0){
+        printf("Erreur Semantique: Division par zero dans la ligne %d \n", nb_Ligne);
+    }else{
+        return;
     }
 }

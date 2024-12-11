@@ -4,8 +4,8 @@ Programme L3_ISIL_A
 PDec
 
 Float c;
-Integer a = 7;
-Float  b | x |a;
+Integer a = 7 | m;
+Float  b | x | y;
 Integer Tab[3];
 final Integer d = 10;
 
@@ -13,7 +13,10 @@ final Integer d = 10;
 
 
 InDebut
-x <- x + 1 * (-1) / 0; 
 
+y <- (1 * x) / 0;   
+m <- (x + 7) * (-1); 
 
 InFin
+
+
