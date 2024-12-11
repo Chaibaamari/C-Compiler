@@ -144,30 +144,6 @@ void InsertType(char *NomEntite, char *Type)
         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
     }
 }
-// void InsertType_CONST(int *NomEntite, char *Type)
-// {
-//     int position = searchPositionInTable(NomEntite);
-//     if (position != -1)
-//     {
-//         TS *current = head;
-//         int currentPos = 0;
-
-//         while (current != NULL)
-//         {
-//             if (currentPos == position)
-//             {
-//                 strcpy(current->Type, Type);
-//                 return;
-//             }
-//             current = current->Next;
-//             currentPos++;
-//         }
-//     }
-//     else
-//     {
-//         printf("Symbol '%s' not found in the symbol table.\n", NomEntite);
-//     }
-// }
 
 int searchFullType(const char *NomEntite)
 {
@@ -198,7 +174,7 @@ void Non_declare(char *NomEntite)
 {
     if (searchFullType(NomEntite) == 0)
     {
-        printf("variable '%s' non declare \n", NomEntite);
+        printf("Error Symantique : variable '%s' non declare \n", NomEntite);
     }
 }
 
@@ -207,5 +183,24 @@ void divide_zero(int divider , int nb_Ligne){
         printf("Erreur Semantique: Division par zero dans la ligne %d \n", nb_Ligne);
     }else{
         return;
+    }
+}
+char *getType(char *NomEntite){
+    char *TYPE = NULL;
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->NomEntite, NomEntite) == 0)
+        {
+            TYPE = current->Type;
+            return TYPE;
+        }
+        current = current->Next;
+    }
+    return TYPE;
+}
+void Incompatible_type(char *type1, char *type2  , int nbLigne){
+    if(strcmp(type1 , type2) != 0){
+        printf("Error Symantique : Incompatible Type '%s' <> '%s' At Line '%d'\n", type1, type2 , nbLigne);
     }
 }

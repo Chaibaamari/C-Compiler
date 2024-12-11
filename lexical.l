@@ -56,9 +56,9 @@ final                  {
                           return INT_CONST;
                        }
 {Fcst}                  {
-                          yylval.entier=atoi(yytext);
+                          yylval.Tfloat=atof(yytext);
                           char strValue[20];
-                          sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
+                          sprintf(strValue, "%.2f", yylval.Tfloat); // this function help to convert integer too a string 
                           InsertI_In_Ts(strValue, "Const", "Float" , "Faux");
                           return FLOAT_CONST;
                        }

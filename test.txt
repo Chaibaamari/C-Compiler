@@ -4,7 +4,7 @@ Programme L3_ISIL_A
 PDec
 
 final Float c = 2.3;
-Integer a = 7 | m;
+Integer a = 7.5 | m;
 Float  b | x | y;
 Integer Tab[3];
 final Integer d = 10;

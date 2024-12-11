@@ -798,9 +798,9 @@ case 16:
 YY_RULE_SETUP
 #line 58 "lexical.l"
 {
-                          yylval.entier=atoi(yytext);
+                          yylval.Tfloat=atof(yytext);
                           char strValue[20];
-                          sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
+                          sprintf(strValue, "%.2f", yylval.Tfloat); // this function help to convert integer too a string 
                           InsertI_In_Ts(strValue, "Const", "Float" , "Faux");
                           return FLOAT_CONST;
                        }

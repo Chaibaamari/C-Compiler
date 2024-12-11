@@ -11,6 +11,7 @@
 %union{ 
   int entier;
   char* str;
+  float Tfloat;
   struct Node* node;
 }
 
@@ -82,10 +83,12 @@ ARRAY: ARRAY L_BRCKET INT_CONST R_BRCKET
 INIT: Idf Equal INT_CONST 
               {
                 handleDeclaration($1, SaveType);
+                Incompatible_type(getType($1) , "Integer" , nb_ligne);
               }
     | Idf Equal FLOAT_CONST
               {
                 handleDeclaration($1, SaveType);
+                Incompatible_type(getType($1) , "Float" , nb_ligne);
               }
     | ARRAY_INIT
 ;

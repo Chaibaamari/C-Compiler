@@ -151,12 +151,13 @@ typedef union YYSTYPE
  
   int entier;
   char* str;
+  float Tfloat;
   struct Node* node;
 
 
 
 /* Line 214 of yacc.c  */
-#line 160 "syntaxique.tab.c"
+#line 161 "syntaxique.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -168,7 +169,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 172 "syntaxique.tab.c"
+#line 173 "syntaxique.tab.c"
 
 #ifdef short
 # undef short
@@ -475,12 +476,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    34,    35,    38,    39,    42,    45,    48,
-      49,    52,    55,    56,    59,    60,    61,    63,    64,    65,
-      66,    68,    73,    78,    79,    82,    86,    90,    93,    96,
-      97,   100,   101,   105,   108,   109,   112,   115,   122,   123,
-     124,   125,   126,   127,   128,   129,   130,   134,   135,   136,
-     137,   138,   139,   140,   141
+       0,    28,    28,    35,    36,    39,    40,    43,    46,    49,
+      50,    53,    56,    57,    60,    61,    62,    64,    65,    66,
+      67,    69,    74,    79,    80,    83,    88,    93,    96,    99,
+     100,   103,   104,   108,   111,   112,   115,   118,   125,   126,
+     127,   128,   129,   130,   131,   132,   133,   137,   138,   139,
+     140,   141,   142,   143,   144
 };
 #endif
 
@@ -1448,7 +1449,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 28 "syntaxique.y"
+#line 29 "syntaxique.y"
     {
     printf("Assignment successful\n");
     YYACCEPT;
@@ -1458,21 +1459,21 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 60 "syntaxique.y"
+#line 61 "syntaxique.y"
     {setConst_Finel((yyvsp[(3) - (6)].str));handleDeclaration((yyvsp[(3) - (6)].str), SaveType);;}
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 61 "syntaxique.y"
+#line 62 "syntaxique.y"
     {setConst_Finel((yyvsp[(3) - (6)].str)); handleDeclaration((yyvsp[(3) - (6)].str), SaveType);;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 69 "syntaxique.y"
+#line 70 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (1)].str), SaveType);
                 
@@ -1482,7 +1483,7 @@ yyreduce:
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 74 "syntaxique.y"
+#line 75 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (2)].str), SaveType);
               ;}
@@ -1491,39 +1492,41 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 83 "syntaxique.y"
+#line 84 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (3)].str), SaveType);
+                Incompatible_type(getType((yyvsp[(1) - (3)].str)) , "Integer" , nb_ligne);
               ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 87 "syntaxique.y"
+#line 89 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (3)].str), SaveType);
+                Incompatible_type(getType((yyvsp[(1) - (3)].str)) , "Float" , nb_ligne);
               ;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 100 "syntaxique.y"
+#line 103 "syntaxique.y"
     {strcpy(SaveType , (yyvsp[(1) - (1)].str));;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 101 "syntaxique.y"
+#line 104 "syntaxique.y"
     {strcpy(SaveType , (yyvsp[(1) - (1)].str));;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 116 "syntaxique.y"
+#line 119 "syntaxique.y"
     {
                       Non_declare((yyvsp[(1) - (4)].str));
                       Modify_Const((yyvsp[(1) - (4)].str));
@@ -1533,7 +1536,7 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 131 "syntaxique.y"
+#line 134 "syntaxique.y"
     {
                     divide_zero((yyvsp[(3) - (3)].entier) , nb_ligne);
                  ;}
@@ -1542,7 +1545,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1546 "syntaxique.tab.c"
+#line 1549 "syntaxique.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1754,7 +1757,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 146 "syntaxique.y"
+#line 149 "syntaxique.y"
 
 
 main()

@@ -82,12 +82,13 @@ typedef union YYSTYPE
  
   int entier;
   char* str;
+  float Tfloat;
   struct Node* node;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 91 "syntaxique.tab.h"
+#line 92 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
