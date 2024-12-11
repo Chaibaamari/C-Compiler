@@ -115,6 +115,7 @@ STATEMENT : AFFECTATIONS /* LOOP  IF  PRINTF() */
 AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
                     {
                       Non_declare($1);
+                      Modify_Const($1);
                     }
 ;
 

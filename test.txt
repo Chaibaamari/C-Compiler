@@ -3,7 +3,7 @@ import Math.io;
 Programme L3_ISIL_A
 PDec
 
-Float c;
+final Float c = 2.3;
 Integer a = 7 | m;
 Float  b | x | y;
 Integer Tab[3];
@@ -16,6 +16,7 @@ InDebut
 
 y <- (1 * x) / 0;   
 m <- (x + 7) * (-1); 
+d <- 2;
 
 InFin
 

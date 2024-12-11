@@ -61,14 +61,31 @@ void setConst_Finel(char *NomEntite)
         {
             if (strcmp(current->Type, "/") == 0)
             {
-                strcpy(current->Const, "oui");
+                strcpy(current->Const, "Oui");
+                return;
             }
         }
         current = current->Next;
     }
 }
 
-void displaySymbolTable()
+void Modify_Const(char *NomEntite){
+    TS *current = head;
+    while (current != NULL)
+    {
+        if (strcmp(current->NomEntite, NomEntite) == 0)
+        {
+            if (strcmp(current->Const, "Oui") == 0)
+            {
+                printf("Error Symantique : You Can't change the const '%s' Value\n" , NomEntite);
+                return;
+            }
+        }
+        current = current->Next;
+    }
+}
+
+    void displaySymbolTable()
 {
     printf("\nSymbol Table:\n");
     printf("============================================================================================\n");

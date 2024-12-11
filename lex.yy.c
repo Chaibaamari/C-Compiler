@@ -778,7 +778,7 @@ YY_RULE_SETUP
                             printf("input Size is too long\n");
                             return;
                           }else{
-                            InsertI_In_Ts(yytext, "IDF", "/" , "/");
+                            InsertI_In_Ts(yytext, "IDF", "/" , "Faux");
                             return Idf;
                           }
                        }
@@ -790,7 +790,7 @@ YY_RULE_SETUP
                           yylval.entier=atoi(yytext);
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
-                          InsertI_In_Ts(strValue, "Const", "/" , "/");
+                          InsertI_In_Ts(strValue, "Const", "Integer" , "Faux");
                           return INT_CONST;
                        }
 	YY_BREAK
@@ -801,7 +801,7 @@ YY_RULE_SETUP
                           yylval.entier=atoi(yytext);
                           char strValue[20];
                           sprintf(strValue, "%d", yylval.entier); // this function help to convert integer too a string 
-                          InsertI_In_Ts(strValue, "Const", "/" , "/");
+                          InsertI_In_Ts(strValue, "Const", "Float" , "Faux");
                           return FLOAT_CONST;
                        }
 	YY_BREAK

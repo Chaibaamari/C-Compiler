@@ -478,9 +478,9 @@ static const yytype_uint8 yyrline[] =
        0,    27,    27,    34,    35,    38,    39,    42,    45,    48,
       49,    52,    55,    56,    59,    60,    61,    63,    64,    65,
       66,    68,    73,    78,    79,    82,    86,    90,    93,    96,
-      97,   100,   101,   105,   108,   109,   112,   115,   121,   122,
-     123,   124,   125,   126,   127,   128,   129,   133,   134,   135,
-     136,   137,   138,   139,   140
+      97,   100,   101,   105,   108,   109,   112,   115,   122,   123,
+     124,   125,   126,   127,   128,   129,   130,   134,   135,   136,
+     137,   138,   139,   140,   141
 };
 #endif
 
@@ -1526,13 +1526,14 @@ yyreduce:
 #line 116 "syntaxique.y"
     {
                       Non_declare((yyvsp[(1) - (4)].str));
+                      Modify_Const((yyvsp[(1) - (4)].str));
                     ;}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 130 "syntaxique.y"
+#line 131 "syntaxique.y"
     {
                     divide_zero((yyvsp[(3) - (3)].entier) , nb_ligne);
                  ;}
@@ -1541,7 +1542,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1545 "syntaxique.tab.c"
+#line 1546 "syntaxique.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1753,7 +1754,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 145 "syntaxique.y"
+#line 146 "syntaxique.y"
 
 
 main()
