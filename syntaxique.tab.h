@@ -44,30 +44,29 @@
      BIB_MATH = 260,
      pvg = 261,
      err = 262,
-     Idf = 263,
-     FIN_PG = 264,
-     COMMA = 265,
-     ACO_R = 266,
-     ACO_C = 267,
-     ADDOP = 268,
-     MULOP = 269,
-     DIVOP = 270,
-     START_PG = 271,
-     TYPE_FLOAT = 272,
-     TYPE_INT = 273,
-     KEY_WORD_PDec = 274,
-     KEY_WORD_Programme = 275,
-     Equal = 276,
-     INT_CONST = 277,
-     FLOAT_CONST = 278,
-     R_BRCKET = 279,
-     L_BRCKET = 280,
-     SEPAR = 281,
-     FINAL = 282,
-     ASSIGN = 283,
-     L_PARENT = 284,
-     R_PARENT = 285,
-     MIX_CHIFFRE = 286
+     FIN_PG = 263,
+     COMMA = 264,
+     ACO_R = 265,
+     ACO_C = 266,
+     ADDOP = 267,
+     MULOP = 268,
+     DIVOP = 269,
+     START_PG = 270,
+     KEY_WORD_PDec = 271,
+     KEY_WORD_Programme = 272,
+     Equal = 273,
+     R_BRCKET = 274,
+     L_BRCKET = 275,
+     SEPAR = 276,
+     FINAL = 277,
+     ASSIGN = 278,
+     L_PARENT = 279,
+     R_PARENT = 280,
+     TYPE_FLOAT = 281,
+     TYPE_INT = 282,
+     Idf = 283,
+     INT_CONST = 284,
+     FLOAT_CONST = 285
    };
 #endif
 
@@ -88,7 +87,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 92 "syntaxique.tab.h"
+#line 91 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

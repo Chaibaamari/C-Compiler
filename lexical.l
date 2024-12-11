@@ -11,7 +11,6 @@ Chiffre [0-9]
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
 Icst    [1-9][0-9]*|0
 Fcst		0|{Chiffre}*"."{Chiffre}+
-chiffre_mix [1-9][0-9]*|0 && 0|{Chiffre}*"."{Chiffre}+
 
 %%
 
@@ -24,7 +23,6 @@ InDebut                return START_PG;
 InFin                  return FIN_PG;
 "{"                    return ACO_R;
 "}"                    return ACO_C;
-chiffre_mix            return MIX_CHIFFRE;
 
 Integer                {
                          yylval.str=strdup("Integer");
