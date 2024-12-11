@@ -6,13 +6,24 @@
   extern YYSTYPE yylval;
 %}
 
+%x ML_COMMENT
+
 Lettre [a-zA-Z]
 Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
 Icst    [1-9][0-9]*|0
 Fcst		0|{Chiffre}*"."{Chiffre}+
 
+
 %%
+
+"//".*        { printf("Eat up comment at line %d\n", nb_ligne); } 
+
+"/*"          { printf("Eat up comment from line %d ", nb_ligne); BEGIN(ML_COMMENT); }
+<ML_COMMENT>"*/"    { printf("to line %d\n", nb_ligne); BEGIN(INITIAL); }
+<ML_COMMENT>[^*\n]+		
+<ML_COMMENT>"*"			
+<ML_COMMENT>"\n"    { nb_ligne += 1; }
 
 import                 return IMPORT;  
 Lang.io                return BIB_LANG; 

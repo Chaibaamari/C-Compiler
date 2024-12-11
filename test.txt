@@ -4,10 +4,11 @@ Programme L3_ISIL_A
 PDec
 
 final Float c = 2.3;
-Integer a = 7.5 | m;
-Float  b | x | y;
-Integer Tab[3];
+Integer a = 7.5 | m; // chaiba amari
+Float  b | x | y; /* hello the variable b and c and y  */
+Integer Tab[3] = [1,2,3];
 final Integer d = 10;
+Integer E = c;
 
 
 

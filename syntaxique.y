@@ -93,11 +93,18 @@ INIT: Idf Equal INT_CONST
                 handleDeclaration($1, SaveType);
                 Incompatible_type(getType($1) , "Float" , nb_ligne);
               }
-    | ARRAY_INIT
+    |  Idf ARRAY Equal L_BRCKET VALUES R_BRCKET
+              {
+                handleDeclaration($1, SaveType);
+              }
+    | Idf Equal Idf
+              {
+                handleDeclaration($1, SaveType);
+                Incompatible_type(getType($1) , getType($3) , nb_ligne);
+              }
 ;
 
-ARRAY_INIT: Idf ARRAY ASSIGN L_BRCKET VALUES R_BRCKET
-;
+
 
 VALUES: VALUES COMMA INT_CONST
       | VALUES COMMA FLOAT_CONST
