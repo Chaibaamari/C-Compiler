@@ -11,6 +11,7 @@
 Lettre [a-zA-Z]
 Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
+Printf_core {Lettre}({Lettre}|{Chiffre}|_)* 
 Icst    [1-9][0-9]*|0
 Fcst		0|{Chiffre}*"."{Chiffre}+
 
@@ -18,7 +19,7 @@ Fcst		0|{Chiffre}*"."{Chiffre}+
 %%
 
 "//".*        { printf("Eat up comment at line %d\n", nb_ligne); } 
-
+"#".*         { printf("Eat up comment at line %d\n", nb_ligne); }
 "/*"          { printf("Eat up comment from line %d ", nb_ligne); BEGIN(ML_COMMENT); }
 <ML_COMMENT>"*/"    { printf("to line %d\n", nb_ligne); BEGIN(INITIAL); }
 <ML_COMMENT>[^*\n]+		
@@ -32,8 +33,9 @@ Programme              return KEY_WORD_Programme;
 PDec                   return KEY_WORD_PDec;
 InDebut                return START_PG;
 InFin                  return FIN_PG;
-"{"                    return ACO_R;
-"}"                    return ACO_C;
+FOR                    return FOR;
+ENDFOR                 return ENDFOR;
+DO                     return DO;
 
 Integer                {
                          yylval.str=strdup("Integer");
@@ -80,11 +82,20 @@ final                  {
 "/"			              { return DIVOP; }
 
 "["                   { return L_BRCKET;}
+"{"                   { return ACO_R  ; }
+"}"                   { return ACO_C  ; }
 "("                   { return L_PARENT;}
 ")"                   { return R_PARENT;}
 "]"                   { return R_BRCKET;}
 "|"                   { return  SEPAR ; }
 "<-"                  {  return ASSIGN; }
+"++"                  { return INCR_OP;}
+"--"                  { return DECR_OP;}
+"<"                   { return INF;}
+">"                   { return SUP;}
+">="                  { return SUP_EG;}
+"<="                  { return INF_EG ;}
+"!="                  { return NOT_EQUAL;}
 
 
 

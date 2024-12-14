@@ -16,8 +16,9 @@
 }
 
 %token BIB_LANG IMPORT BIB_MATH pvg err FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
-%token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal ;
-%token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT;
+%token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
+%token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
+%token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL
 
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
 %token <entier>INT_CONST <entier>FLOAT_CONST
@@ -124,7 +125,7 @@ STATEMENTS : STATEMENTS STATEMENT
            | STATEMENT
 ; 
 
-STATEMENT : AFFECTATIONS /* LOOP  IF  PRINTF() */
+STATEMENT : AFFECTATIONS | for_statement;  /* LOOP  IF  PRINTF() */
 
 
 AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
@@ -132,6 +133,16 @@ AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
                       Non_declare($1);
                       Modify_Const($1);
                     }
+;
+
+for_statement: FOR L_PARENT  AFFECTATIONS  EXPRESSION  pvg   AFFECTATION  R_PARENT  DO STATEMENTS ENDFOR
+;
+EXPRESSION :  Idf SUP       INT_CONST 
+            | Idf INF       INT_CONST 
+            | Idf Equal     INT_CONST 
+            | Idf SUP_EG    INT_CONST 
+            | Idf INF_EG    INT_CONST   
+            | Idf NOT_EQUAL INT_CONST
 ;
 
 AFFECTATION: AFFECTATION ADDOP INT_CONST
@@ -154,8 +165,11 @@ AFFECTATION: AFFECTATION ADDOP INT_CONST
            | Idf
            | INT_CONST
            | FLOAT_CONST
+           | Idf INCR_OP
+           | Idf DECR_OP
 
 ;
+
 
 
 %%
