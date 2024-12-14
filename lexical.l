@@ -7,6 +7,7 @@
 %}
 
 %x ML_COMMENT
+%x STRING
 
 Lettre [a-zA-Z]
 Chiffre [0-9] 
@@ -14,9 +15,11 @@ IDF {Lettre}({Lettre}|{Chiffre}|_)*
 Printf_core {Lettre}({Lettre}|{Chiffre}|_)* 
 Icst    [1-9][0-9]*|0
 Fcst		0|{Chiffre}*"."{Chiffre}+
+FormatSpecifier (%d|%f|%s)
 
 
 %%
+
 
 "//".*        { printf("Eat up comment at line %d\n", nb_ligne); } 
 "#".*         { printf("Eat up comment at line %d\n", nb_ligne); }
@@ -26,9 +29,20 @@ Fcst		0|{Chiffre}*"."{Chiffre}+
 <ML_COMMENT>"*"			
 <ML_COMMENT>"\n"    { nb_ligne += 1; }
 
-import                 return IMPORT;  
-Lang.io                return BIB_LANG; 
-Math.io                return BIB_MATH;
+\"                         { BEGIN(STRING); } 
+<STRING>(\\.|[^"\n])*\"    { 
+                             BEGIN(INITIAL); 
+                             yylval.str = strdup(yytext); 
+                             return STRING_LITERAL; 
+                           }
+<STRING>\n                 { 
+                             printf("Error: Unclosed string at line %d\n", nb_ligne); 
+                             BEGIN(INITIAL); 
+                           }
+
+import                 {return IMPORT;}  
+Lang.io                {return BIB_LANG;} 
+Math.io                {return BIB_MATH;}
 Programme              return KEY_WORD_Programme;
 PDec                   return KEY_WORD_PDec;
 InDebut                return START_PG;
@@ -36,7 +50,9 @@ InFin                  return FIN_PG;
 FOR                    return FOR;
 ENDFOR                 return ENDFOR;
 DO                     return DO;
-
+Input                  { return INPUT; }
+Write                  { return WRITE; }
+{FormatSpecifier}      { return FORMAT_SPECIFIER; }
 Integer                {
                          yylval.str=strdup("Integer");
                          return TYPE_INT;
