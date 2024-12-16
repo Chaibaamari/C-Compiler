@@ -165,8 +165,8 @@ argumentsInput : FS argumentsInput
 ;
 argumentsWrite : Idf argumentsWrite // when we put another one not working  ????
           | FS argumentsWrite       // here i want to create another one but is not working why? 
-          | FS SEM                  // also we can't put Idf because we have two problemme 
-          | Idf SEM                 // 1 - the Idf is limited 2- how i can do the space caractere????
+          | FS SEM                  // also we can't put Idf because we have three problemme 
+          | Idf SEM                 // 1 - the Idf is limited 2- how i can do the space caractere 3- i won't inserted into table ????
 ;
 argument : argument COMMA Idf 
          |  COMMA Idf 
