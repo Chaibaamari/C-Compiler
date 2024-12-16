@@ -20,7 +20,7 @@
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
 %token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
 %token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL;
-%token INPUT WRITE <str>FS  SEM space;
+%token INPUT WRITE <str>FS space;
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
 %token <entier>INT_CONST <entier>FLOAT_CONST;
 %token <str>core_write;
@@ -150,23 +150,23 @@ EXPRESSION :  Idf SUP       INT_CONST
             | Idf NOT_EQUAL INT_CONST
 ;
 
-printf_statement: WRITE L_PARENT SEM  argumentsWrite argument R_PARENT pvg {
+printf_statement: WRITE L_PARENT argumentsWrite argument R_PARENT pvg {
                 printf("OK\n");
                 }
                  | INPUT { if(IOBIB == 0){
                                    printf("ERROR : if faut declare le biblioteque 'ISIL_IO' pour excuter cette operation\n");
                                     return;}}
-                           L_PARENT SEM argumentsInput  argument  R_PARENT pvg {
+                           L_PARENT  argumentsInput  argument  R_PARENT pvg {
                  printf("OK\n");
                 }
     ;
 argumentsInput : FS argumentsInput 
-               | FS SEM
+               | FS 
 ;
-argumentsWrite : Idf argumentsWrite // when we put another one not working  ????
-          | FS argumentsWrite       // here i want to create another one but is not working why? 
-          | FS SEM                  // also we can't put Idf because we have three problemme 
-          | Idf SEM                 // 1 - the Idf is limited 2- how i can do the space caractere 3- i won't inserted into table ????
+argumentsWrite : core_write argumentsWrite 
+          | FS argumentsWrite       
+          | FS                   
+          | core_write                  
 ;
 argument : argument COMMA Idf 
          |  COMMA Idf 

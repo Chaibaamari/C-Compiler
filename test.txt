@@ -27,7 +27,7 @@ FOR(i <- 0 ; i < 5 ; i++)
       DO
       b <- 4 + b;
       Input("%d",x);
-      Write("Helloworld %d", x);
+      Write("Hello world chaiba %d", x);
      ENDFOR
 ENDFOR
 

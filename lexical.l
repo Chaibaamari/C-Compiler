@@ -12,7 +12,7 @@
 Lettre [a-zA-Z]
 Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
-Printf_core ({IDF}|_)*
+Printf_core  \"[^\"]*\"
 Icst [1-9][0-9]*|0
 Fcst 0|{Chiffre}*"."{Chiffre}+
 FormatSpecifier %[dfs]
@@ -20,7 +20,6 @@ FormatSpecifier %[dfs]
 
 
 %%
-
 
 "//".*         
 "#".*         
@@ -95,7 +94,6 @@ final                  {
 "+"|"-"		            { return ADDOP; }
 "*"			              { return MULOP; }
 "/"			              { return DIVOP; }
-[\"]                   {return SEM;}
 
 
 "["                   { return L_BRCKET;}
