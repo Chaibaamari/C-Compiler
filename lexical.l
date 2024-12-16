@@ -12,10 +12,11 @@
 Lettre [a-zA-Z]
 Chiffre [0-9] 
 IDF {Lettre}({Lettre}|{Chiffre}|_)* 
-Printf_core {Lettre}({Lettre}|{Chiffre}|_)* 
-Icst    [1-9][0-9]*|0
-Fcst		0|{Chiffre}*"."{Chiffre}+
-FormatSpecifier (%d|%f|%s)
+Printf_core ({IDF}|_)*
+Icst [1-9][0-9]*|0
+Fcst 0|{Chiffre}*"."{Chiffre}+
+FormatSpecifier %[dfs]
+
 
 
 %%
@@ -29,16 +30,6 @@ FormatSpecifier (%d|%f|%s)
 <ML_COMMENT>"*"			
 <ML_COMMENT>"\n"    { nb_ligne += 1; }
 
-\"                         { BEGIN(STRING); } 
-<STRING>(\\.|[^"\n])*\"    { 
-                             BEGIN(INITIAL); 
-                             yylval.str = strdup(yytext); 
-                             return STRING_LITERAL; 
-                           }
-<STRING>\n                 { 
-                             printf("Error: Unclosed string at line %d\n", nb_ligne); 
-                             BEGIN(INITIAL); 
-                           }
 
 import                 {return IMPORT;}  
 Lang.io                {return BIB_LANG;} 
@@ -52,7 +43,7 @@ ENDFOR                 return ENDFOR;
 DO                     return DO;
 Input                  { return INPUT; }
 Write                  { return WRITE; }
-{FormatSpecifier}      { return FORMAT_SPECIFIER; }
+
 Integer                {
                          yylval.str=strdup("Integer");
                          return TYPE_INT;
@@ -89,6 +80,14 @@ final                  {
                           InsertI_In_Ts(strValue, "Const", "Float" , "Faux");
                           return FLOAT_CONST;
                        }
+{Printf_core}           {
+                           yylval.str = strdup(yytext);
+                           return core_write;
+                        }
+{FormatSpecifier}       {
+                           yylval.str = strdup(yytext);
+                           return FS;
+                        }
 
 =                     { return Equal; }
 ;                     { return pvg;   }
@@ -96,6 +95,8 @@ final                  {
 "+"|"-"		            { return ADDOP; }
 "*"			              { return MULOP; }
 "/"			              { return DIVOP; }
+[\"]                   {return SEM;}
+
 
 "["                   { return L_BRCKET;}
 "{"                   { return ACO_R  ; }

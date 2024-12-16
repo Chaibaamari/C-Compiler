@@ -3,7 +3,7 @@ import Math.io;
 Programme L3_ISIL_A
 PDec
 
-final Float c = 2.3; // Const Finel
+final Float c = 2.3; // Const Finel 
 Integer a = 7.5 | m; # chaiba amari
 Float  b | x | y; /*
 kja urrg hello the variable b and c and y 
@@ -12,9 +12,6 @@ Integer Tab[3] = [1,2,3];
 final Integer d = 10;
 Integer E = c;
 Integer i;
-
-
-
 
 InDebut
 
@@ -29,7 +26,8 @@ FOR(i <- 0 ; i < 5 ; i++)
      FOR(a <- 0 ; a < 3 ; a++)
       DO
       b <- 4 + b;
-      Input("hello chaiba how are you"); // show the Input One 
+      Input("%d",x);
+      Write("Helloworld %d", x);
      ENDFOR
 ENDFOR
 

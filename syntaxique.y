@@ -19,10 +19,10 @@
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
 %token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
 %token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL;
-%token INPUT WRITE FORMAT_SPECIFIER STRING_LITERAL;
-
+%token INPUT WRITE <str>FS  SEM space;
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
-%token <entier>INT_CONST <entier>FLOAT_CONST
+%token <entier>INT_CONST <entier>FLOAT_CONST;
+%token <str>core_write;
 
 
 %left MULOP DIVOP
@@ -126,7 +126,7 @@ STATEMENTS : STATEMENTS STATEMENT
            | STATEMENT
 ; 
 
-STATEMENT : AFFECTATIONS | for_statement |printf_statement;  /* LOOP  IF  PRINTF() */
+STATEMENT : AFFECTATIONS | for_statement |printf_statement ;  /* LOOP  IF  PRINTF() */
 
 
 AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
@@ -146,14 +146,23 @@ EXPRESSION :  Idf SUP       INT_CONST
             | Idf NOT_EQUAL INT_CONST
 ;
 
-printf_statement: INPUT L_PARENT argument_list R_PARENT pvg
-                |WRITE L_PARENT argument_list R_PARENT pvg
+printf_statement: WRITE L_PARENT SEM  argumentsWrite argument R_PARENT pvg {
+                printf("OK\n");
+                }
+                 | INPUT L_PARENT SEM argumentsInput  argument  R_PARENT pvg {
+                 printf("OK\n");
+                }
+    ;
+argumentsInput : FS argumentsInput 
+               | FS SEM
 ;
-
-argument_list:
-      STRING_LITERAL
-    | STRING_LITERAL FORMAT_SPECIFIER COMMA Idf
-    | Idf
+argumentsWrite : Idf argumentsWrite // when we put another one not working  ????
+          | FS argumentsWrite       // here i want to create another one but is not working why? 
+          | FS SEM                  // also the we can't put Idf because we have two problemme 
+          | Idf SEM                 // 1 - the Idf is limited 2- how i can do the space caractere????
+;
+argument : argument COMMA Idf 
+         |  COMMA Idf 
 ;
 
 AFFECTATION: AFFECTATION ADDOP INT_CONST
