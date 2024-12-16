@@ -5,7 +5,8 @@
 
   int nb_ligne = 1;
   char SaveType[20];
-
+  int langBIB = 0;
+  int IOBIB = 0;
 
 %}
 %union{ 
@@ -15,7 +16,7 @@
   struct Node* node;
 }
 
-%token BIB_LANG IMPORT BIB_MATH pvg err FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
+%token BIB_LANG IMPORT BIB_IO pvg err FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
 %token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
 %token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL;
@@ -41,8 +42,8 @@ IMP: IMPORT BIB
    | /* epsilon (empty alternative) */
 ;
 
-BIB: BIB_LANG T
-   | BIB_MATH T
+BIB: BIB_LANG {langBIB = 1;} T
+   | BIB_IO {IOBIB = 1;} T
 ;
 
 T: pvg IMP
@@ -133,6 +134,9 @@ AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
                     {
                       Non_declare($1);
                       Modify_Const($1);
+                      if(langBIB == 0){
+                        printf("ERROR : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
+                      }
                     }
 ;
 
@@ -149,7 +153,10 @@ EXPRESSION :  Idf SUP       INT_CONST
 printf_statement: WRITE L_PARENT SEM  argumentsWrite argument R_PARENT pvg {
                 printf("OK\n");
                 }
-                 | INPUT L_PARENT SEM argumentsInput  argument  R_PARENT pvg {
+                 | INPUT { if(IOBIB == 0){
+                                   printf("ERROR : if faut declare le biblioteque 'ISIL_IO' pour excuter cette operation\n");
+                                    return;}}
+                           L_PARENT SEM argumentsInput  argument  R_PARENT pvg {
                  printf("OK\n");
                 }
     ;

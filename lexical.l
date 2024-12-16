@@ -22,9 +22,9 @@ FormatSpecifier %[dfs]
 %%
 
 
-"//".*        { printf("Eat up comment at line %d\n", nb_ligne); } 
-"#".*         { printf("Eat up comment at line %d\n", nb_ligne); }
-"/*"          { printf("Eat up comment from line %d ", nb_ligne); BEGIN(ML_COMMENT); }
+"//".*         
+"#".*         
+"/*"          {  BEGIN(ML_COMMENT); }
 <ML_COMMENT>"*/"    { printf("to line %d\n", nb_ligne); BEGIN(INITIAL); }
 <ML_COMMENT>[^*\n]+		
 <ML_COMMENT>"*"			
@@ -32,8 +32,8 @@ FormatSpecifier %[dfs]
 
 
 import                 {return IMPORT;}  
-Lang.io                {return BIB_LANG;} 
-Math.io                {return BIB_MATH;}
+ISIL.io                {return BIB_IO;} 
+ISIL.lang                {return BIB_LANG;}
 Programme              return KEY_WORD_Programme;
 PDec                   return KEY_WORD_PDec;
 InDebut                return START_PG;

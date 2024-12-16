@@ -41,7 +41,7 @@
    enum yytokentype {
      BIB_LANG = 258,
      IMPORT = 259,
-     BIB_MATH = 260,
+     BIB_IO = 260,
      pvg = 261,
      err = 262,
      FIN_PG = 263,
@@ -95,7 +95,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 11 "syntaxique.y"
+#line 12 "syntaxique.y"
  
   int entier;
   char* str;
