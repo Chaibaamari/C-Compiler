@@ -7,6 +7,9 @@
   char SaveType[20];
   int langBIB = 0;
   int IOBIB = 0;
+  int checkBIB = 0 ;
+  int checkInput = 0 ;
+  int checkWrite = 0 ;
 
 %}
 %union{ 
@@ -20,14 +23,22 @@
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
 %token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
 %token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL REFER;
-%token INPUT WRITE <str>FS space IF ELSE ENDIF;
+%token INPUT WRITE <str>FS space IF ELSE ENDIF NOT;
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
-%token <entier>INT_CONST <entier>FLOAT_CONST;
+%token <entier>INT_CONST <entier>FLOAT_CONST SEM;
 %token <str>core_write;
 
 
 %left MULOP DIVOP
 %left ADDOP
+%right Equal
+%right REFER
+%right INCR_OP
+%left SUP
+%left INF 
+%left SUP_EG 
+%left INF_EG
+%left NOT_EQUAL
 
 
 %%
@@ -127,15 +138,16 @@ STATEMENTS : STATEMENTS STATEMENT
            | STATEMENT
 ; 
 
-STATEMENT : AFFECTATIONS | for_statement | printf_statement | if_statement;  /* LOOP  IF  PRINTF() */
+STATEMENT : AFFECTATIONS | for_statement | printf_statement | if_statement; 
 
 
 AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
                     {
-                      Non_declare($1);
+                      Non_declare($1 , nb_ligne);
                       Modify_Const($1);
-                      if(langBIB == 0){
+                      if(langBIB == 0 && checkBIB == 0){
                         printf("ERROR : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
+                        checkBIB = 1;
                       }
                     }
 ;
@@ -147,6 +159,7 @@ if_statement: IF L_PARENT EXPRESSION R_PARENT DO STATEMENTS  optional_else
 optional_else: ENDIF
              | ELSE STATEMENTS ENDIF
 ;
+
 EXPRESSION :  Idf SUP       INT_CONST 
             | Idf INF       INT_CONST 
             | Idf Equal     INT_CONST 
@@ -156,27 +169,24 @@ EXPRESSION :  Idf SUP       INT_CONST
             | Idf REFER     INT_CONST
 ;
 
-printf_statement: WRITE L_PARENT argumentsWrite argument R_PARENT pvg {
-                printf("OK\n");
+printf_statement: WRITE  L_PARENT core_write  COMMA Idf R_PARENT pvg {
+                        if(IOBIB == 0 && checkInput == 0){
+                          printf("Error Symantique : Pour utiliser 'Input' il faut declare 'ISIL_IO'\n");
+                          checkInput = 1;
+                        }
+                        SymantiqueFormatage($3 , $5 , nb_ligne);
                 }
-                 | INPUT { if(IOBIB == 0){
-                                   printf("ERROR : if faut declare le biblioteque 'ISIL_IO' pour excuter cette operation\n");
-                                    return;}}
-                           L_PARENT  argumentsInput  argument  R_PARENT pvg {
-                 printf("OK\n");
+                 | INPUT L_PARENT core_write COMMA Idf  R_PARENT pvg {
+                        if(IOBIB == 0 && checkWrite == 0){
+                          printf("Error Symantique : Pour utiliser 'Write' il faut declare 'ISIL_IO'\n");
+                          checkWrite = 1;
+                        }
+                        SymantiqueFormatage($3 , $5 , nb_ligne);
                 }
     ;
-argumentsInput : FS argumentsInput 
-               | FS 
-;
-argumentsWrite : core_write argumentsWrite 
-          | FS argumentsWrite       
-          | FS                   
-          | core_write                  
-;
-argument : argument COMMA Idf 
-         |  COMMA Idf 
-;
+/*argument : argument COMMA Idf 
+         |  COMMA Idf
+;*/
 
 AFFECTATION: AFFECTATION ADDOP INT_CONST
            | AFFECTATION ADDOP FLOAT_CONST
@@ -211,6 +221,7 @@ main()
 {
 yyparse(); 
 displaySymbolTable();
+
 }
 syywrap()
 {}

@@ -97,6 +97,7 @@ final                  {
 "+"|"-"		            { return ADDOP; }
 "*"			              { return MULOP; }
 "/"			              { return DIVOP; }
+["]                  {return SEM;}
 
 
 "["                   { return L_BRCKET;}
@@ -115,6 +116,7 @@ final                  {
 "<="                  { return INF_EG ;}
 "!="                  { return NOT_EQUAL;}
 "&"                   { return REFER; }
+"!"                   {return NOT;}
 
 
 

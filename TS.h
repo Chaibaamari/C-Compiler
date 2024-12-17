@@ -12,6 +12,19 @@ typedef struct TS
     char Const[20];
     struct TS *Next;
 } TS;
+// Define the FormatType structure
+typedef struct FormatType
+{
+    char specifier[100]; // Format specifier (e.g., "%d")
+    char type[100];      // Corresponding type (e.g., "Integer", "Float")
+} FormatType;
+
+// Create an array of FormatType mappings
+FormatType formatTypes[] = {
+    {"%d", "Integer"}, // Integer format specifier
+    {"%f", "Float"},   // Float format specifier
+};
+
 
 // Pointer to the head of the linked list
 TS *head = NULL;
@@ -170,11 +183,11 @@ void handleDeclaration(char *identifier, char *type)
         printf("Error: Variable '%s' is already declared in the same Programme.\n", identifier);
     }
 }
-void Non_declare(char *NomEntite)
+void Non_declare(char *NomEntite , int nbLigne)
 {
     if (searchFullType(NomEntite) == 0)
     {
-        printf("Error Symantique : variable '%s' non declare \n", NomEntite);
+        printf("Error Symantique : variable '%s' non declare a la  ligne '%d' \n", NomEntite , nbLigne);
     }
 }
 
@@ -202,5 +215,121 @@ char *getType(char *NomEntite){
 void Incompatible_type(char *type1, char *type2  , int nbLigne){
     if(strcmp(type1 , type2) != 0){
         printf("Error Symantique : Incompatible Type '%s' <> '%s' At Line '%d'\n", type1, type2 , nbLigne);
+    }
+}
+
+int CheckForm(char string[])
+{
+    int taille = strlen(string);
+    int nbrFormat = 0;
+    int i;
+    for ( i = 0; i < taille; i++)
+    {
+        if (string[i] == '%')
+        {
+            if (i + 1 < taille)
+            {
+                if (string[i + 1] == 'd' || string[i + 1] == 'f' || string[i + 1] == 's')
+                {
+                    nbrFormat++;
+                }
+                else
+                {
+                    printf("Invalid format specifier detected: %c\n", string[i + 1]);
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
+    return nbrFormat;
+}
+int checkCompatibleFormat(char format[], char NomEntite[])
+{
+    TS *current = head;
+    char cpy[100];                     // Use a larger buffer for the format string
+    int position = searchPositionInTable(NomEntite); // Assuming this function searches for the entity
+    int i, j;
+
+    // If position is not valid, return -1 immediately
+    if (position == -1)
+    {
+        return -1; // Entity not found in the table
+    }
+
+    int TPR = strlen(format);
+    for (i = 0; i < TPR; i++)
+    {
+        if (format[i] == '%') // Format specifier found
+        {
+            // Handle format specifiers
+            if (format[i + 1] == 'd')
+            {
+                strcpy(cpy, "%d");
+            }
+            else if (format[i + 1] == 'f')
+            {
+                strcpy(cpy, "%f");
+            }
+            else if (format[i + 1] == 's')
+            {
+                strcpy(cpy, "%s");
+            }
+            else
+            {
+                // Invalid format specifier
+                return -1;
+            }
+
+            // Now compare the format specifier with the entity's type
+            while (current != NULL)
+            {
+                if (strcmp(current->NomEntite, NomEntite) == 0)
+                {
+                    // Iterate over the FormatType array to find the matching type
+                    for (j = 0; j < sizeof(formatTypes) / sizeof(formatTypes[0]); j++)
+                    {
+                        if (strcmp(cpy, formatTypes[j].specifier) == 0)
+                        {
+                            // Compare the corresponding type with the entity's type
+                            if (strcmp(formatTypes[j].type, current->Type) == 0)
+                            {
+                                return 1; // Compatible format
+                            }
+                            else
+                            {
+                                return 0; // Incompatible format
+                            }
+                        }
+                    }
+                }
+                current = current->Next; // Move to the next entity in the list
+            }
+        }
+    }
+
+    // If no compatible format found
+    return -1;
+}
+
+void SymantiqueFormatage(char NomEntite1[] , char NomEntite2[] , int nbLigne){
+    if (CheckForm(NomEntite1) == 0)
+    {
+        printf("Error Symantique : Foramatage Non valid a la ligne '%d'\n", nbLigne);
+    }
+    else
+    {
+        Non_declare(NomEntite2 , nbLigne);
+        if (checkCompatibleFormat(NomEntite1, NomEntite2) == 1)
+        {
+            printf("elle est valid");
+            }
+            else
+            {
+                printf("Error Symantique : compatible de Foramatage Non valid a la ligne '%d'\n", nbLigne);
+            }
     }
 }

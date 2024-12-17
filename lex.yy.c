@@ -282,17 +282,17 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 56
-#define YY_END_OF_BUFFER 57
+#define YY_NUM_RULES 58
+#define YY_END_OF_BUFFER 59
 static yyconst short int yy_accept[146] =
     {   0,
-        0,    0,    0,    0,    0,    0,   57,   55,   53,   54,
-       53,   55,   55,    2,   55,   52,   40,   41,   35,   34,
-       33,   34,   55,   36,   27,   27,   32,   47,   31,   48,
-       26,   26,   26,   26,   26,   26,   26,   37,   42,   26,
-       26,   38,   43,   39,    5,    7,    6,   56,   51,    0,
-       29,    2,   30,   45,   46,   28,    3,    1,    0,    0,
-       27,   44,   50,   49,   26,   17,   26,   26,   26,   26,
+        0,    0,    0,    0,    0,    0,   59,   57,   55,   56,
+       55,   54,   37,    2,   57,   53,   41,   42,   35,   34,
+       33,   34,   57,   36,   27,   27,   32,   48,   31,   49,
+       26,   26,   26,   26,   26,   26,   26,   38,   43,   26,
+       26,   39,   44,   40,    5,    7,    6,   58,   52,    0,
+       29,    2,   30,   46,   47,   28,    3,    1,    0,    0,
+       27,   45,   51,   50,   26,   17,   26,   26,   26,   26,
        18,   26,   26,   26,   26,   26,   26,   26,    5,    4,
         1,   26,   26,   15,   26,   26,   26,   26,   26,   26,
        26,   26,   26,   26,   26,   19,   26,   26,   26,   26,
@@ -942,106 +942,116 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 102 "lexical.l"
-{ return L_BRCKET;}
+#line 100 "lexical.l"
+{return SEM;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 103 "lexical.l"
-{ return ACO_R  ; }
+{ return L_BRCKET;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 104 "lexical.l"
-{ return ACO_C  ; }
+{ return ACO_R  ; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 105 "lexical.l"
-{ return L_PARENT;}
+{ return ACO_C  ; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 106 "lexical.l"
-{ return R_PARENT;}
+{ return L_PARENT;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 107 "lexical.l"
-{ return R_BRCKET;}
+{ return R_PARENT;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 108 "lexical.l"
-{ return  SEPAR ; }
+{ return R_BRCKET;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 109 "lexical.l"
-{  return ASSIGN; }
+{ return  SEPAR ; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 110 "lexical.l"
-{ return INCR_OP;}
+{  return ASSIGN; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 111 "lexical.l"
-{ return DECR_OP;}
+{ return INCR_OP;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 112 "lexical.l"
-{ return INF;}
+{ return DECR_OP;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 113 "lexical.l"
-{ return SUP;}
+{ return INF;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
 #line 114 "lexical.l"
-{ return SUP_EG;}
+{ return SUP;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 115 "lexical.l"
-{ return INF_EG ;}
+{ return SUP_EG;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 #line 116 "lexical.l"
-{ return NOT_EQUAL;}
+{ return INF_EG ;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 #line 117 "lexical.l"
-{ return REFER; }
+{ return NOT_EQUAL;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 122 "lexical.l"
-/* Skip whitespace */;
+#line 118 "lexical.l"
+{ return REFER; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 123 "lexical.l"
-nb_ligne++ ;
+#line 119 "lexical.l"
+{return NOT;}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
 #line 124 "lexical.l"
-{printf("Error Lexical a ligne %d sur %s \n" , nb_ligne ,yytext);
-                      return err;}
+/* Skip whitespace */;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
+#line 125 "lexical.l"
+nb_ligne++ ;
+	YY_BREAK
+case 57:
+YY_RULE_SETUP
 #line 126 "lexical.l"
+{printf("Error Lexical a ligne %d sur %s \n" , nb_ligne ,yytext);
+                      return err;}
+	YY_BREAK
+case 58:
+YY_RULE_SETUP
+#line 128 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1045 "lex.yy.c"
+#line 1055 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(ML_COMMENT):
 case YY_STATE_EOF(STRING):
@@ -1929,5 +1939,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 126 "lexical.l"
+#line 128 "lexical.l"
 

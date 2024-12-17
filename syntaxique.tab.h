@@ -82,12 +82,14 @@
      IF = 298,
      ELSE = 299,
      ENDIF = 300,
-     TYPE_FLOAT = 301,
-     TYPE_INT = 302,
-     Idf = 303,
-     INT_CONST = 304,
-     FLOAT_CONST = 305,
-     core_write = 306
+     NOT = 301,
+     TYPE_FLOAT = 302,
+     TYPE_INT = 303,
+     Idf = 304,
+     INT_CONST = 305,
+     FLOAT_CONST = 306,
+     SEM = 307,
+     core_write = 308
    };
 #endif
 
@@ -98,7 +100,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 12 "syntaxique.y"
+#line 15 "syntaxique.y"
  
   int entier;
   char* str;
@@ -108,7 +110,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 112 "syntaxique.tab.h"
+#line 114 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
