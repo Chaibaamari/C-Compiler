@@ -3,42 +3,42 @@ import ISIL.lang;
 Programme L3_ISIL_A
 PDec
 
-final Float c = 2.3; // Const Finel 
-Integer a = 7.5 | m; # chaiba amari
-Float  b | x | y; /*
+final Float C = 2.3; // Const Finel 
+Integer C = 7.5 | M; # chaiba amari
+Float  B | X | Y; /*
 kja urrg hello the variable b and c and y 
 hef */
 Integer Tab[3] = [1,2,3];
-final Integer d = 10;
-Integer E = c;
-Integer i;
+final Integer D = 10;
+Integer E = C;
+Integer I | S;
 
 InDebut
 
-y <- (1 * x) / 0;   
-m <- (x + 7) * (-1); 
-d <- 2;
+Y <- (1 * X) / 0;   
+M <- (X + 7) * (-1); 
+D <- 2;
 
-FOR(i <- 0 ; i < 5 ; i++)
+FOR(I <- 0 ; I < 5 ; I++)
  DO
- x <- 1;
+ X <- 1;
   # add here sous FOR BLOCKS 
-     FOR(a <- 0 ; a < 3 ; a++)
+     FOR(A <- 0 ; A < 3 ; A++)
       DO
-      b <- 4 + b;
-      IF( i <=3) DO
-         b <- 4 + b;
+      B <- 4 + B;
+      IF( B ==3 ) DO
+         B <- 4 + B;
        ELSE
-         b <- 11+b;
+         B <- 11+B;
        ENDIF
-      Input("%d",x); // formatage non valid
-      Write("Hello world chaiba %d", x);
+      Input("%d",X); // formatage non valid
+      Write("Hello world chaiba %f", X);
      ENDFOR
 ENDFOR
 
-IF( i <=3) 
+IF(((I < 2) && (A > 1)) || (B == 3) || !A) 
 DO
- Write("the values is %d" , s);
+ Write("the values is %d" , S);
 ENDIF
 
 InFin

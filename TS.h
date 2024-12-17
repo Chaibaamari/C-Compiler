@@ -280,7 +280,7 @@ int checkCompatibleFormat(char format[], char NomEntite[])
             }
             else
             {
-                // Invalid format specifier
+
                 return -1;
             }
 
@@ -310,26 +310,18 @@ int checkCompatibleFormat(char format[], char NomEntite[])
             }
         }
     }
-
-    // If no compatible format found
     return -1;
 }
 
 void SymantiqueFormatage(char NomEntite1[] , char NomEntite2[] , int nbLigne){
-    if (CheckForm(NomEntite1) == 0)
-    {
+    if (CheckForm(NomEntite1) == 0){
         printf("Error Symantique : Foramatage Non valid a la ligne '%d'\n", nbLigne);
-    }
-    else
-    {
+    }else{
         Non_declare(NomEntite2 , nbLigne);
-        if (checkCompatibleFormat(NomEntite1, NomEntite2) == 1)
-        {
-            printf("elle est valid");
-            }
-            else
-            {
-                printf("Error Symantique : compatible de Foramatage Non valid a la ligne '%d'\n", nbLigne);
-            }
+        if (checkCompatibleFormat(NomEntite1, NomEntite2) == 1){
+            return;
+        }else{
+        printf("Error Symantique : compatible de Foramatage Non valid a la ligne '%d'\n", nbLigne);
+        }
     }
 }

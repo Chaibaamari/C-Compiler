@@ -9,9 +9,10 @@
 %x ML_COMMENT
 %x STRING
 
+L      [A-Z]
 Lettre [a-zA-Z]
 Chiffre [0-9] 
-IDF {Lettre}({Lettre}|{Chiffre}|_)* 
+IDF {L}({Lettre}|{Chiffre}|_)* 
 Printf_core  \"[^\"]*\"
 Icst [1-9][0-9]*|0
 Fcst 0|{Chiffre}*"."{Chiffre}+
@@ -97,9 +98,6 @@ final                  {
 "+"|"-"		            { return ADDOP; }
 "*"			              { return MULOP; }
 "/"			              { return DIVOP; }
-["]                  {return SEM;}
-
-
 "["                   { return L_BRCKET;}
 "{"                   { return ACO_R  ; }
 "}"                   { return ACO_C  ; }
@@ -115,8 +113,10 @@ final                  {
 ">="                  { return SUP_EG;}
 "<="                  { return INF_EG ;}
 "!="                  { return NOT_EQUAL;}
-"&"                   { return REFER; }
-"!"                   {return NOT;}
+"=="                  {return EQ_OP; }
+"&&"                  { return REFER; }
+"||"                  { return ORFER; }
+"!"                   {return NOT; }
 
 
 

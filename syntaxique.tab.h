@@ -67,29 +67,30 @@
      ASSIGN = 283,
      L_PARENT = 284,
      R_PARENT = 285,
-     INCR_OP = 286,
-     DECR_OP = 287,
-     SUP = 288,
-     INF = 289,
-     SUP_EG = 290,
-     INF_EG = 291,
-     NOT_EQUAL = 292,
-     REFER = 293,
-     INPUT = 294,
-     WRITE = 295,
-     FS = 296,
-     space = 297,
-     IF = 298,
-     ELSE = 299,
-     ENDIF = 300,
-     NOT = 301,
-     TYPE_FLOAT = 302,
-     TYPE_INT = 303,
-     Idf = 304,
-     INT_CONST = 305,
-     FLOAT_CONST = 306,
-     SEM = 307,
-     core_write = 308
+     ORFER = 286,
+     INCR_OP = 287,
+     DECR_OP = 288,
+     SUP = 289,
+     INF = 290,
+     SUP_EG = 291,
+     INF_EG = 292,
+     NOT_EQUAL = 293,
+     REFER = 294,
+     EQ_OP = 295,
+     INPUT = 296,
+     WRITE = 297,
+     FS = 298,
+     space = 299,
+     IF = 300,
+     ELSE = 301,
+     ENDIF = 302,
+     NOT = 303,
+     TYPE_FLOAT = 304,
+     TYPE_INT = 305,
+     Idf = 306,
+     INT_CONST = 307,
+     FLOAT_CONST = 308,
+     core_write = 309
    };
 #endif
 
@@ -100,7 +101,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 15 "syntaxique.y"
+#line 16 "syntaxique.y"
  
   int entier;
   char* str;
@@ -110,7 +111,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 114 "syntaxique.tab.h"
+#line 115 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

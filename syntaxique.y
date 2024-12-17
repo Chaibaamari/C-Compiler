@@ -10,6 +10,7 @@
   int checkBIB = 0 ;
   int checkInput = 0 ;
   int checkWrite = 0 ;
+  int nbr = 0;
 
 %}
 %union{ 
@@ -21,11 +22,12 @@
 
 %token BIB_LANG IMPORT BIB_IO pvg err FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
-%token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
-%token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL REFER;
+%token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ORFER ;
+%token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL REFER EQ_OP;
 %token INPUT WRITE <str>FS space IF ELSE ENDIF NOT;
+
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
-%token <entier>INT_CONST <entier>FLOAT_CONST SEM;
+%token <entier>INT_CONST <entier>FLOAT_CONST;
 %token <str>core_write;
 
 
@@ -33,12 +35,16 @@
 %left ADDOP
 %right Equal
 %right REFER
+%right ORFER
 %right INCR_OP
+%right DECR_OP
 %left SUP
 %left INF 
 %left SUP_EG 
 %left INF_EG
 %left NOT_EQUAL
+%left EQ_OP
+%left COMMA
 
 
 %%
@@ -69,6 +75,8 @@ PROG_NAME: Idf
 
 P_DECL: KEY_WORD_PDec DECLARATIONS DEBUT_PROGRAMME
 ;
+
+// part of déclaration ---------------------------------------------------------------------------------
 
 DECLARATIONS : DECLARATIONS DECLARATION
           | DECLARATION
@@ -120,16 +128,17 @@ INIT: Idf Equal INT_CONST
 
 
 
-VALUES: VALUES COMMA INT_CONST
-      | VALUES COMMA FLOAT_CONST
-      | INT_CONST
-      | FLOAT_CONST
+VALUES: VALUES COMMA INT_CONST {nbr++}
+      | VALUES COMMA FLOAT_CONST {nbr++}
+      | INT_CONST {nbr++}
+      | FLOAT_CONST {nbr++}
 ;
 
 TYPE: TYPE_INT   {strcpy(SaveType , $1);}
     | TYPE_FLOAT {strcpy(SaveType , $1);}
 ;
 
+// part of Programme Instruction ---------------------------------------------------------------------------------
 
 DEBUT_PROGRAMME: START_PG STATEMENTS FIN_PG
 ;
@@ -160,13 +169,20 @@ optional_else: ENDIF
              | ELSE STATEMENTS ENDIF
 ;
 
-EXPRESSION :  Idf SUP       INT_CONST 
-            | Idf INF       INT_CONST 
-            | Idf Equal     INT_CONST 
-            | Idf SUP_EG    INT_CONST 
-            | Idf INF_EG    INT_CONST   
-            | Idf NOT_EQUAL INT_CONST
-            | Idf REFER     INT_CONST
+EXPRESSION :  EXPRESSION SUP EXPRESSION
+            | EXPRESSION INF EXPRESSION 
+            | EXPRESSION Equal EXPRESSION 
+            | EXPRESSION SUP_EG EXPRESSION 
+            | EXPRESSION INF_EG EXPRESSION   
+            | EXPRESSION NOT_EQUAL EXPRESSION
+            | EXPRESSION EQ_OP EXPRESSION
+            | EXPRESSION REFER  EXPRESSION 
+            | EXPRESSION ORFER  EXPRESSION 
+            | L_PARENT EXPRESSION R_PARENT
+            | NOT Idf 
+            | Idf
+            | INT_CONST
+            | FLOAT_CONST
 ;
 
 printf_statement: WRITE  L_PARENT core_write  COMMA Idf R_PARENT pvg {
