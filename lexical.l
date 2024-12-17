@@ -22,9 +22,9 @@ FormatSpecifier %[dfs]
 
 %%
 
-"//".*         
+"//".*         { printf("Eat up comment at line %d\n", nb_ligne); }
 "#".*         
-"/*"          {  BEGIN(ML_COMMENT); }
+"/*"          { printf("Eat up comment from line %d ", nb_ligne); BEGIN(ML_COMMENT); }
 <ML_COMMENT>"*/"    { printf("to line %d\n", nb_ligne); BEGIN(INITIAL); }
 <ML_COMMENT>[^*\n]+		
 <ML_COMMENT>"*"			
@@ -33,17 +33,17 @@ FormatSpecifier %[dfs]
 
 import                 {return IMPORT;}  
 ISIL.io                {return BIB_IO;} 
-ISIL.lang                {return BIB_LANG;}
-Programme              return KEY_WORD_Programme;
-PDec                   return KEY_WORD_PDec;
-InDebut                return START_PG;
-InFin                  return FIN_PG;
-FOR                    return FOR;
-ENDFOR                 return ENDFOR;
-DO                     return DO;
-IF                     return IF;
-ELSE                   return ELSE;
-ENDIF                  return ENDIF;
+ISIL.lang              {return BIB_LANG;}
+Programme              {return KEY_WORD_Programme;}
+PDec                   {return KEY_WORD_PDec;}
+InDebut                {return START_PG;}
+InFin                  {return FIN_PG;}
+FOR                    {return FOR;}
+ENDFOR                 {return ENDFOR;}
+DO                     {  return DO;   }
+IF                     {   return IF;  }
+ELSE                   {  return ELSE; }
+ENDIF                  { return ENDIF; }
 Input                  { return INPUT; }
 Write                  { return WRITE; }
 

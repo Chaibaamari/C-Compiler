@@ -90,7 +90,7 @@ void Modify_Const(char *NomEntite){
         {
             if (strcmp(current->Const, "Oui") == 0)
             {
-                printf("Error Symantique : You Can't change the const '%s' Value\n" , NomEntite);
+                printf("Erreur Symantique : You Can't change the const '%s' Value\n" , NomEntite);
                 return;
             }
         }
@@ -180,14 +180,14 @@ void handleDeclaration(char *identifier, char *type)
     if (searchFullType(identifier) == 0){
         InsertType(identifier, type);
     }else{
-        printf("Error: Variable '%s' is already declared in the same Programme.\n", identifier);
+        printf("Erreur: Variable '%s' is already declared in the same Programme.\n", identifier);
     }
 }
 void Non_declare(char *NomEntite , int nbLigne)
 {
     if (searchFullType(NomEntite) == 0)
     {
-        printf("Error Symantique : variable '%s' non declare a la  ligne '%d' \n", NomEntite , nbLigne);
+        printf("Erreur Symantique : variable '%s' non declare a la  ligne '%d' \n", NomEntite , nbLigne);
     }
 }
 
@@ -214,7 +214,7 @@ char *getType(char *NomEntite){
 }
 void Incompatible_type(char *type1, char *type2  , int nbLigne){
     if(strcmp(type1 , type2) != 0){
-        printf("Error Symantique : Incompatible Type '%s' <> '%s' At Line '%d'\n", type1, type2 , nbLigne);
+        printf("Erreur Symantique : Incompatible Type '%s' <> '%s' At Line '%d'\n", type1, type2 , nbLigne);
     }
 }
 
@@ -315,13 +315,20 @@ int checkCompatibleFormat(char format[], char NomEntite[])
 
 void SymantiqueFormatage(char NomEntite1[] , char NomEntite2[] , int nbLigne){
     if (CheckForm(NomEntite1) == 0){
-        printf("Error Symantique : Foramatage Non valid a la ligne '%d'\n", nbLigne);
+        printf("Erreur Symantique : Foramatage Non valid a la ligne '%d'\n", nbLigne);
     }else{
         Non_declare(NomEntite2 , nbLigne);
         if (checkCompatibleFormat(NomEntite1, NomEntite2) == 1){
             return;
         }else{
-        printf("Error Symantique : compatible de Foramatage Non valid a la ligne '%d'\n", nbLigne);
+            printf("Erreur Symantique : compatible de Foramatage Non valid a la ligne '%d'\n", nbLigne);
         }
+    }
+}
+
+void depassmentDeTaille(int CurrentArraySize, int ValueCount , int nbLigne){
+    if (CurrentArraySize != ValueCount)
+    {
+        printf("Erreur semantique : Depassement de la taille de la table, a la ligne '%d'\n", nbLigne);
     }
 }

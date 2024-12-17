@@ -81,12 +81,13 @@
   int checkBIB = 0 ;
   int checkInput = 0 ;
   int checkWrite = 0 ;
-  int nbr = 0;
+  int ValueCount = 0;
+  int CurrentArraySize = 0;
 
 
 
 /* Line 189 of yacc.c  */
-#line 90 "syntaxique.tab.c"
+#line 91 "syntaxique.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -175,7 +176,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 16 "syntaxique.y"
+#line 17 "syntaxique.y"
  
   int entier;
   char* str;
@@ -185,7 +186,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 189 "syntaxique.tab.c"
+#line 190 "syntaxique.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -197,7 +198,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 201 "syntaxique.tab.c"
+#line 202 "syntaxique.tab.c"
 
 #ifdef short
 # undef short
@@ -521,15 +522,15 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    51,    51,    58,    59,    62,    62,    63,    63,    66,
-      69,    72,    73,    76,    81,    82,    85,    86,    87,    89,
-      90,    91,    92,    94,    99,   104,   105,   108,   113,   118,
-     122,   131,   132,   133,   134,   137,   138,   143,   146,   147,
-     150,   150,   150,   150,   153,   164,   166,   168,   169,   172,
-     173,   174,   175,   176,   177,   178,   179,   180,   181,   182,
-     183,   184,   185,   188,   195,   207,   208,   209,   210,   211,
-     212,   213,   214,   215,   219,   220,   221,   222,   223,   224,
-     225,   226,   227,   228
+       0,    52,    52,    59,    60,    63,    63,    64,    64,    67,
+      70,    73,    74,    77,    82,    83,    86,    87,    88,    90,
+      91,    92,    93,    95,   100,   105,   106,   109,   114,   119,
+     124,   133,   134,   135,   136,   139,   140,   145,   148,   149,
+     152,   152,   152,   152,   155,   166,   168,   170,   171,   174,
+     175,   176,   177,   178,   179,   180,   181,   182,   183,   184,
+     185,   186,   187,   190,   197,   209,   210,   211,   212,   213,
+     214,   215,   216,   217,   221,   222,   223,   224,   225,   226,
+     227,   228,   229,   230
 };
 #endif
 
@@ -1557,7 +1558,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 52 "syntaxique.y"
+#line 53 "syntaxique.y"
     {
     printf("Assignment successful\n");
     YYACCEPT;
@@ -1567,35 +1568,35 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 62 "syntaxique.y"
+#line 63 "syntaxique.y"
     {langBIB = 1;;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 63 "syntaxique.y"
+#line 64 "syntaxique.y"
     {IOBIB = 1;;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 86 "syntaxique.y"
+#line 87 "syntaxique.y"
     {setConst_Finel((yyvsp[(3) - (6)].str));handleDeclaration((yyvsp[(3) - (6)].str), SaveType);;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 87 "syntaxique.y"
+#line 88 "syntaxique.y"
     {setConst_Finel((yyvsp[(3) - (6)].str)); handleDeclaration((yyvsp[(3) - (6)].str), SaveType);;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 95 "syntaxique.y"
+#line 96 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (1)].str), SaveType);
                 
@@ -1605,16 +1606,23 @@ yyreduce:
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 100 "syntaxique.y"
+#line 101 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (2)].str), SaveType);
               ;}
     break;
 
+  case 26:
+
+/* Line 1455 of yacc.c  */
+#line 106 "syntaxique.y"
+    {CurrentArraySize = (yyvsp[(2) - (3)].entier);}
+    break;
+
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 109 "syntaxique.y"
+#line 110 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (3)].str), SaveType);
                 Incompatible_type(getType((yyvsp[(1) - (3)].str)) , "Integer" , nb_ligne);
@@ -1624,7 +1632,7 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 114 "syntaxique.y"
+#line 115 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (3)].str), SaveType);
                 Incompatible_type(getType((yyvsp[(1) - (3)].str)) , "Float" , nb_ligne);
@@ -1634,16 +1642,17 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 119 "syntaxique.y"
+#line 120 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (6)].str), SaveType);
+                depassmentDeTaille(CurrentArraySize , ValueCount , nb_ligne);
               ;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 123 "syntaxique.y"
+#line 125 "syntaxique.y"
     {
                 handleDeclaration((yyvsp[(1) - (3)].str), SaveType);
                 Incompatible_type(getType((yyvsp[(1) - (3)].str)) , getType((yyvsp[(3) - (3)].str)) , nb_ligne);
@@ -1653,54 +1662,54 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 131 "syntaxique.y"
-    {nbr++;}
+#line 133 "syntaxique.y"
+    {ValueCount++;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 132 "syntaxique.y"
-    {nbr++;}
+#line 134 "syntaxique.y"
+    {ValueCount++;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 133 "syntaxique.y"
-    {nbr++;}
+#line 135 "syntaxique.y"
+    {ValueCount++;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 134 "syntaxique.y"
-    {nbr++;}
+#line 136 "syntaxique.y"
+    {ValueCount++;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 137 "syntaxique.y"
+#line 139 "syntaxique.y"
     {strcpy(SaveType , (yyvsp[(1) - (1)].str));;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 138 "syntaxique.y"
+#line 140 "syntaxique.y"
     {strcpy(SaveType , (yyvsp[(1) - (1)].str));;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 154 "syntaxique.y"
+#line 156 "syntaxique.y"
     {
                       Non_declare((yyvsp[(1) - (4)].str) , nb_ligne);
                       Modify_Const((yyvsp[(1) - (4)].str));
                       if(langBIB == 0 && checkBIB == 0){
-                        printf("ERROR : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
+                        printf("Erreur : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
                         checkBIB = 1;
                       }
                     ;}
@@ -1709,10 +1718,10 @@ yyreduce:
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 188 "syntaxique.y"
+#line 190 "syntaxique.y"
     {
                         if(IOBIB == 0 && checkInput == 0){
-                          printf("Error Symantique : Pour utiliser 'Input' il faut declare 'ISIL_IO'\n");
+                          printf("Erreur Symantique : Pour utiliser 'Input' il faut declare 'ISIL_IO'\n");
                           checkInput = 1;
                         }
                         SymantiqueFormatage((yyvsp[(3) - (7)].str) , (yyvsp[(5) - (7)].str) , nb_ligne);
@@ -1722,10 +1731,10 @@ yyreduce:
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 195 "syntaxique.y"
+#line 197 "syntaxique.y"
     {
                         if(IOBIB == 0 && checkWrite == 0){
-                          printf("Error Symantique : Pour utiliser 'Write' il faut declare 'ISIL_IO'\n");
+                          printf("Erreur Symantique : Pour utiliser 'Write' il faut declare 'ISIL_IO'\n");
                           checkWrite = 1;
                         }
                         SymantiqueFormatage((yyvsp[(3) - (7)].str) , (yyvsp[(5) - (7)].str) , nb_ligne);
@@ -1735,7 +1744,7 @@ yyreduce:
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 216 "syntaxique.y"
+#line 218 "syntaxique.y"
     {
                     divide_zero((yyvsp[(3) - (3)].entier) , nb_ligne);
                  ;}
@@ -1744,7 +1753,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1748 "syntaxique.tab.c"
+#line 1757 "syntaxique.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1956,20 +1965,21 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 234 "syntaxique.y"
+#line 236 "syntaxique.y"
 
 
 main()
 {
 yyparse(); 
 displaySymbolTable();
-
+printf("size : %d" , CurrentArraySize);
+printf("values : %d" , ValueCount);
 }
 syywrap()
 {}
-int yyerror (char *msg)
+int yyErreur (char *msg)
 {
-  fprintf(stderr, "Syntax error at line %d\n", nb_ligne);
+  fprintf(stderr, "Syntax Erreur at line %d\n", nb_ligne);
   exit(1);
 }
 

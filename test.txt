@@ -5,10 +5,9 @@ PDec
 
 final Float C = 2.3; // Const Finel 
 Integer C = 7.5 | M; # chaiba amari
-Float  B | X | Y; /*
-kja urrg hello the variable b and c and y 
-hef */
-Integer Tab[3] = [1,2,3];
+Float  B | X | Y; /* kja urrg hello the variable b and c and y hef */
+Integer Tab[3] = [1,2,3,4];
+Integer SUM[1] = [1,2,4];
 final Integer D = 10;
 Integer E = C;
 Integer I | S;

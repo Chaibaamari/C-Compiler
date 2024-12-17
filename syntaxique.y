@@ -10,7 +10,8 @@
   int checkBIB = 0 ;
   int checkInput = 0 ;
   int checkWrite = 0 ;
-  int nbr = 0;
+  int ValueCount = 0;
+  int CurrentArraySize = 0;
 
 %}
 %union{ 
@@ -102,7 +103,7 @@ VARIABLE: Idf
               }
 ;
 ARRAY: ARRAY L_BRCKET INT_CONST R_BRCKET
-     | L_BRCKET INT_CONST R_BRCKET
+     | L_BRCKET INT_CONST R_BRCKET  {CurrentArraySize = $2}
 ;
 
 INIT: Idf Equal INT_CONST 
@@ -118,6 +119,7 @@ INIT: Idf Equal INT_CONST
     |  Idf ARRAY Equal L_BRCKET VALUES R_BRCKET
               {
                 handleDeclaration($1, SaveType);
+                depassmentDeTaille(CurrentArraySize , ValueCount , nb_ligne);
               }
     | Idf Equal Idf
               {
@@ -128,10 +130,10 @@ INIT: Idf Equal INT_CONST
 
 
 
-VALUES: VALUES COMMA INT_CONST {nbr++}
-      | VALUES COMMA FLOAT_CONST {nbr++}
-      | INT_CONST {nbr++}
-      | FLOAT_CONST {nbr++}
+VALUES: VALUES COMMA INT_CONST {ValueCount++}
+      | VALUES COMMA FLOAT_CONST {ValueCount++}
+      | INT_CONST {ValueCount++}
+      | FLOAT_CONST {ValueCount++}
 ;
 
 TYPE: TYPE_INT   {strcpy(SaveType , $1);}
@@ -155,7 +157,7 @@ AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
                       Non_declare($1 , nb_ligne);
                       Modify_Const($1);
                       if(langBIB == 0 && checkBIB == 0){
-                        printf("ERROR : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
+                        printf("Erreur : if faut declare le biblioteque 'ISIL_LANG' pour excuter cette opération");
                         checkBIB = 1;
                       }
                     }
@@ -187,14 +189,14 @@ EXPRESSION :  EXPRESSION SUP EXPRESSION
 
 printf_statement: WRITE  L_PARENT core_write  COMMA Idf R_PARENT pvg {
                         if(IOBIB == 0 && checkInput == 0){
-                          printf("Error Symantique : Pour utiliser 'Input' il faut declare 'ISIL_IO'\n");
+                          printf("Erreur Symantique : Pour utiliser 'Input' il faut declare 'ISIL_IO'\n");
                           checkInput = 1;
                         }
                         SymantiqueFormatage($3 , $5 , nb_ligne);
                 }
                  | INPUT L_PARENT core_write COMMA Idf  R_PARENT pvg {
                         if(IOBIB == 0 && checkWrite == 0){
-                          printf("Error Symantique : Pour utiliser 'Write' il faut declare 'ISIL_IO'\n");
+                          printf("Erreur Symantique : Pour utiliser 'Write' il faut declare 'ISIL_IO'\n");
                           checkWrite = 1;
                         }
                         SymantiqueFormatage($3 , $5 , nb_ligne);
@@ -237,13 +239,12 @@ main()
 {
 yyparse(); 
 displaySymbolTable();
-
 }
 syywrap()
 {}
-int yyerror (char *msg)
+int yyErreur (char *msg)
 {
-  fprintf(stderr, "Syntax error at line %d\n", nb_ligne);
+  fprintf(stderr, "Syntax Erreur at line %d\n", nb_ligne);
   exit(1);
 }
 
