@@ -74,16 +74,20 @@
      SUP_EG = 290,
      INF_EG = 291,
      NOT_EQUAL = 292,
-     INPUT = 293,
-     WRITE = 294,
-     FS = 295,
-     space = 296,
-     TYPE_FLOAT = 297,
-     TYPE_INT = 298,
-     Idf = 299,
-     INT_CONST = 300,
-     FLOAT_CONST = 301,
-     core_write = 302
+     REFER = 293,
+     INPUT = 294,
+     WRITE = 295,
+     FS = 296,
+     space = 297,
+     IF = 298,
+     ELSE = 299,
+     ENDIF = 300,
+     TYPE_FLOAT = 301,
+     TYPE_INT = 302,
+     Idf = 303,
+     INT_CONST = 304,
+     FLOAT_CONST = 305,
+     core_write = 306
    };
 #endif
 
@@ -104,7 +108,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 108 "syntaxique.tab.h"
+#line 112 "syntaxique.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

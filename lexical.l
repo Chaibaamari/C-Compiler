@@ -40,6 +40,9 @@ InFin                  return FIN_PG;
 FOR                    return FOR;
 ENDFOR                 return ENDFOR;
 DO                     return DO;
+IF                     return IF;
+ELSE                   return ELSE;
+ENDIF                  return ENDIF;
 Input                  { return INPUT; }
 Write                  { return WRITE; }
 
@@ -111,6 +114,7 @@ final                  {
 ">="                  { return SUP_EG;}
 "<="                  { return INF_EG ;}
 "!="                  { return NOT_EQUAL;}
+"&"                   { return REFER; }
 
 
 

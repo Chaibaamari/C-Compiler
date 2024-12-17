@@ -19,8 +19,8 @@
 %token BIB_LANG IMPORT BIB_IO pvg err FIN_PG COMMA ACO_R ACO_C ADDOP MULOP DIVOP ;
 %token START_PG KEY_WORD_PDec KEY_WORD_Programme Equal PRINT Print_CORE FOR ENDFOR DO;
 %token R_BRCKET L_BRCKET SEPAR FINAL ASSIGN L_PARENT R_PARENT ;
-%token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL;
-%token INPUT WRITE <str>FS space;
+%token INCR_OP DECR_OP SUP INF SUP_EG INF_EG NOT_EQUAL REFER;
+%token INPUT WRITE <str>FS space IF ELSE ENDIF;
 %token <str>TYPE_FLOAT <str>TYPE_INT <str>Idf;
 %token <entier>INT_CONST <entier>FLOAT_CONST;
 %token <str>core_write;
@@ -127,7 +127,7 @@ STATEMENTS : STATEMENTS STATEMENT
            | STATEMENT
 ; 
 
-STATEMENT : AFFECTATIONS | for_statement |printf_statement ;  /* LOOP  IF  PRINTF() */
+STATEMENT : AFFECTATIONS | for_statement | printf_statement | if_statement;  /* LOOP  IF  PRINTF() */
 
 
 AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
@@ -142,12 +142,18 @@ AFFECTATIONS :  Idf ASSIGN AFFECTATION pvg
 
 for_statement: FOR L_PARENT  AFFECTATIONS  EXPRESSION  pvg   AFFECTATION  R_PARENT  DO STATEMENTS ENDFOR
 ;
+if_statement: IF L_PARENT EXPRESSION R_PARENT DO STATEMENTS  optional_else  
+;
+optional_else: ENDIF
+             | ELSE STATEMENTS ENDIF
+;
 EXPRESSION :  Idf SUP       INT_CONST 
             | Idf INF       INT_CONST 
             | Idf Equal     INT_CONST 
             | Idf SUP_EG    INT_CONST 
             | Idf INF_EG    INT_CONST   
             | Idf NOT_EQUAL INT_CONST
+            | Idf REFER     INT_CONST
 ;
 
 printf_statement: WRITE L_PARENT argumentsWrite argument R_PARENT pvg {
